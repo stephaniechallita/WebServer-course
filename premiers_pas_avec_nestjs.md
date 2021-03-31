@@ -4,7 +4,7 @@
 
 Pour installer `NestJS`, vous pouvez utiliser la ligne de commande suivante : 
 
-```shell=
+```shell
 npm i -g @nestjs/cli
 ```
 
@@ -15,7 +15,7 @@ Avec cette commande, vous avez à disposition un ensemble de commandes qui perme
 
 Pour générer un squelette de projet `NestJS`, il suffit d'utiliser la ligne de commande suivante :
 
-```shell=
+```shell
 nest new fr-administration
 ```
 
@@ -25,14 +25,14 @@ Choisissez `npm` comme `package manager`.
 
 Une fois installé, vous pouvez lancer votre backend avec les commandes suivantes :
 
-```shell=
+```shell
 cd fr-administration
 npm run start
 ```
 
 Pour tester, ouvrez un second terminal et lancer la commande suivante :
 
-```shell=
+```shell
 curl http://localhost:3000
 ```
 
@@ -40,7 +40,7 @@ Cette commande va faire une requête `GET`, sur l'url `http://localhost`, sur le
 
 Vous devriez observer sur la console le message suivant :
 
-```shell=
+```shell
 $ curl http://localhost:3000 
 Hello World!%
 ```
@@ -53,7 +53,7 @@ Situé à la racine du projet, ce fichier permet de spécifier les dépendences 
 
 Par exemple, lorsque nous avons lancer la commande `npm run start`, cette commande éxécute la commande `nest start`. Cette correspondance est définit dans le fichier `package.json`, plus particulièrement dans l'élément `scripts`:
 
-```json=
+```json
 "scripts": {
     ...
     "start": "nest start",
@@ -68,7 +68,7 @@ Vous pouvez étudier ce fichier et essayer les divers commandes pre-configuré. 
 
 Le fichier `src/main.ts` est le "main" du backend, c'est-à-dire, c'est ce fichier qui lance le backend.
 
-```typescript=
+```typescript
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
@@ -100,7 +100,7 @@ Vous remarquerez qu'avec `NestJS`, il y a une convention de nommage de fichier :
 
 Pour générer un nouveau module, il suffit d'utiliser la ligne de commande suivante :
 
-```shell=
+```shell
 $ nest g module users
 CREATE src/users/users.module.ts (82 bytes)
 UPDATE src/app.module.ts (312 bytes)
@@ -126,6 +126,6 @@ La syntaxe et le paradigme de programmation de `Typescript` sont à la croisée 
 L'IDE à utiliser est [VisualCode Studio](https://code.visualstudio.com/). Une fois installé, vous pouvez le lancer depuis un terminal en vous plaçant dans le repertoire de votre projet et en tapant la commande : 
 
 
-```shell=
+```shell
 code .
 ``` 

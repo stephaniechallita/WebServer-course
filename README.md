@@ -13,7 +13,7 @@ Suivez la procédure en fonction de votre système d'exploitation.
 L'IDE à utiliser est [VisualCode Studio](https://code.visualstudio.com/). Une fois installé, vous pouvez le lancer depuis
 un terminal en vous plaçant dans le repertoire de votre projet et en tapant la commande : 
 
-```shell=
+```shell
 code .
 ``` 
 

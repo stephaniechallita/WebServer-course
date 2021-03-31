@@ -13,7 +13,7 @@ de leurs requêtes.
 
 Pour cela, install tout d'abord les modules requis :
 
-```sh=
+```sh
 npm install --save @nestjs/passport passport passport-local
 npm install --save-dev @types/passport-local
 ```
@@ -32,7 +32,7 @@ Générez maintenant un nouveau module `auth`, et ajoutez-y un nouveau service.
 
 Implémentez dans ce service la méthode suivante :
 
-```typescript=
+```typescript
 public async validateUser(id: number, password: string) : Promise<User> {
     /** To be implemendted **/
 }
@@ -42,7 +42,7 @@ public async validateUser(id: number, password: string) : Promise<User> {
 
 Une fois implémenté, nous allons ajouter notre strategy au module `auth`. Créez le fichier `local.strategy.ts` dans le 
 module `auth` :
-```typescript=
+```typescript
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
 
@@ -69,7 +69,7 @@ On utilisera donc l'id de l'utilisateur comme un `username`. Il suffit de le "ca
 
 Mettez ensuite à jours votre `auth.module.ts` :
 
-```diff=
+```diff
 import { Module } from '@nestjs/common';
 +import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from 'src/users/users.module';
@@ -92,7 +92,7 @@ l'application des gardes est assez directe : on refuse l'accès aux utilisateurs
 On va donc mettre en place un `Guard` pour protéger certains endpoints avec l'authentification.
 Premièrement, générez un contrôleur dans le module `auth` et ajoutez la méthode `login()` suivante : 
 
-```typescript=
+```typescript
 import { Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -121,7 +121,7 @@ logique d'authentification à sa garde, et on évite alors de la redondance de c
 
 Faites le nécessaire d'un point de vue base de données, et tester la nouvelle API avec les commandes suivantes :
 
-```shell=
+```shell
 # expected 200 with info of user with ID = 1
 curl -X POST http://localhost:3000/auth/login -d '{"username": "1", "password": "valid_password"}' -H "Content-Type: application/json"
 # expecting 401 Unauthorized
@@ -139,7 +139,7 @@ place un **JSON W**eb **T**oken qui permettra d'authentifier l'utilisateur plus 
 
 Pour commencer, on va installer le module `passport-jwt` : 
 
-```shell=
+```shell
 npm install --save @nestjs/jwt passport-jwt
 ```
 
@@ -149,7 +149,7 @@ dire que l'utilisateur a bien été authentifié, grâce à la stratégie "local
 
 Ajoutez à votre service la méthode suivante :
 
-```typescript=
+```typescript
 async login(user: any) {
     const payload = { username: user.id };
     return {
@@ -165,7 +165,7 @@ l'utilisateur.
 
 Créez maintenant un nouveau fichier `auth/constants.ts` qui contiendra le code suivant :
 
-```typescript=
+```typescript
 export const jwtConstants = {
   secret: 'secretKey',
 };

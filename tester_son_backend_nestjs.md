@@ -7,7 +7,7 @@ sur les tests unitaires des contrôleurs d'un backend NestJS. Cependant, la logi
 
 Pour tester votre backend, il faut d'abord installer les bons modules :
 
-```shell=
+```shell
 npm i --save-dev @nestjs/testing
 ```
 
@@ -19,7 +19,7 @@ NestJS.
 Si vous avez suivie les parties précédentes, NestJS génère automatiquement le fichier de tests lorsque vous utilisez la
 commande `nest g co association-forms`, et celui-ci s'appellera `association-forms.controller.spec.ts` :
 
-```typescript=
+```typescript
 import { Test, TestingModule } from '@nestjs/testing';
 import { AssociationFormsController } from './association-forms.controller';
 
@@ -57,7 +57,7 @@ Lancez la commande suivante : `npm run test association-forms.controller` vous d
 
 Pour résoudre ce problème, faites les modifications suivantes dans votre fichier de test :
 
-```diff=
+```diff
 import { Test, TestingModule } from '@nestjs/testing';
 import { AssociationFormsController } from './association-forms.controller';
 + import { AssociationFormsService } from './association-forms.service';
@@ -88,7 +88,7 @@ Une fois fait, relancer la commande, et maintenant il manque le repository pour 
 
 Pour résoudre ce problème, on va mocker aussi le repository de la façon suivante : 
 
-```diff=
+```diff
 import { Test, TestingModule } from '@nestjs/testing';
 +import { getRepositoryToken } from '@nestjs/typeorm';
 +import { Repository } from 'typeorm';
@@ -129,7 +129,7 @@ describe('AssociationFormsController', () => {
 
 Relancez la commande, et cela devrait passer. Maintenant que cela fonctionne, attardons-nous un peu sur le test : 
 
-```typescript=
+```typescript
 it('should be defined', () => {
     expect(controller).toBeDefined();
 });
@@ -142,7 +142,7 @@ veut dire "on s'attend que la variable `controller` soit définit."
 
 Voici l'implémentation du test de l'API `getAll` du contrôleur :
 
-```typescript=
+```typescript
 describe('getAll', () => {
     it('should return an array of association forms', async () => {
       const expected = Promise.all([{ 
@@ -177,7 +177,7 @@ Contrairement à `getAll()`, celle-ci prend en entrée un paramètre, un entier 
 Pour cela, rien de plus simple, il nous faut simplement mocker la méthode `get(id)` du service sous-jacent, 
 préciser le paramètre lors de l'appel dans le `expect()` :
 
-```typescript=
+```typescript
  describe('get', () => {
     it('should return a single association form, with the provided id', async () => {
       /** Omitted **/ 

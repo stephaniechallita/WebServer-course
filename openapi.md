@@ -6,13 +6,13 @@ Dans cette partie, nous allons ajouter à notre backend une interface **swagger*
 
 Pour ce faire, il faut installer les modules requis :
 
-```shell=
+```shell
 npm install --save @nestjs/swagger swagger-ui-express
 ```
 
 Modifiez votre fichier `main.ts`:
 
-```diff=
+```diff
 import { NestFactory } from '@nestjs/core';
 +import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -43,7 +43,7 @@ interface OpenAPI.
 Dans la version par défaut, toutes vos apis devraient être regroupées sous le tag `defaut`. Pour configurer ces tags, 
 il suffit d'ajouter aux contrôleurs le décorateur ` @ApiTags('<tag>')`. Par exemple, pour le contrôleur des utilisateurs :
 
-```typescript=
+```typescript
 /** omis **/
 import { ApiTags } from '@nestjs/swagger';
 
@@ -61,7 +61,7 @@ Regroupez tous les endpoints sous des tags qui vous semblent cohérents.
 
 Jusqu'à maintenant, nous définissions nos endpoints `POST` comme ceci :
 
-```typescript=
+```typescript
 @Post()
 public async create(@Body() input: any): Promise<User> {
     return this.service.create(input.firstname, input.lastname, input.age);
@@ -74,7 +74,7 @@ Si on observe l'interface OpenAPI corresponds on a :
 
 Ce qui n'aide pas vraiment. Pour améliorer ça, nous allons créer une nouvelle classe :
 
-```typescript=
+```typescript
 export class UserInput {
     public firstname: string;
     public lastname: string;
@@ -84,7 +84,7 @@ export class UserInput {
 
 et modifier l'input de notre API :
 
-```diff=
+```diff
 @Post()
 -public async create(@Body() input: any): Promise<User> {
 public async create(@Body() input: UserInput): Promise<User> {
@@ -98,7 +98,7 @@ d'information. Il nous faut compléter cela, en ajoutant sur chaque attribut de 
 
 Vous pouvez compléter les informations du décorateur afin d'enrichir votre documentation OpenAPI comme ceci :
 
-```typescript=
+```typescript
 @ApiProperty({
     description: 'The age of the user',
     minimum: 18,

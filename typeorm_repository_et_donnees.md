@@ -24,18 +24,18 @@ Premièrement, installer SQLite sur votre machine : voir la [doc](https://www.sq
 
 Si vous avez un Linux ([source](https://smallbusiness.chron.com/use-sqlite-ubuntu-46774.html)), tapez la commande 
 suivante dans votre terminal :
-```shell=
+```shell
 sudo apt-get install sqlite3 libsqlite3-dev
 ```
 
 Puis lancer la commande :
-```shell=
+```shell
 sqlite3 mydatabase.db
 ```
 
-Une fois le prompt activé, tapez la commande suivante qui créera la base de données (avec le point !) :
+Une fois le prompt de `sqlite3` activé, tapez la commande suivante qui créera la base de données (avec le point !) :
 
-```shell=
+```shell
 .databases
 ```
 
@@ -45,13 +45,13 @@ Ceci créera une base de données dans le fichier `mydatabase.db`.
 
 Pour installer TypeORM, tapez la commande suivante à la racine de votre projet :
 
-```shell=
+```shell
 npm install --save @nestjs/typeorm typeorm sqlite3
 ```
 
 Puis importer dans votre `app.module.ts` le module `TypeORMModule` de la façon suivante :
 
-```diff=
+```diff
 @Module({
   imports: [
 +    TypeOrmModule.forRoot({
@@ -82,7 +82,7 @@ décorateurs brièvement ou à la [documentation officielle](https://docs.nestjs
 Pensez-bien à quels décorateurs vous allez utiliser. Vous ne devriez pas modifier les définitions des classes, sauf pour
 `association.entity`:
 
-```diff=
+```diff
 - public idUsers: number[];
 + public users: User[];
 ```
@@ -93,7 +93,7 @@ Mettez à jours le service en conséquence.
 
 Maintenant, nous allons injecter le `repository` dans nos services. Pour ce faire, modifiez le `users.service.ts`:
 
-```diff=
+```diff
 -const users: User[] = [
 -    {
 -        id: 0,
@@ -117,7 +117,7 @@ attribute de notre classe `UserService`.
 
 Vous devrez aussi ajouter dans le `user.module.ts` l'import suivant :
 
-```diff=
+```diff
 @Module({
 + imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
@@ -138,7 +138,7 @@ _e.g._ `Promise<User>`).
 
 Par exemple pour `getById`, on aura :
 
-```diff=
+```diff
 - public getById(idToFind: number): User {
 + public async getById(idToFind: number): Promise<User> {
 ```
@@ -147,7 +147,7 @@ Voici les méthodes qui nous intéresseront pour le moment :
 
 - `repository.create({})` : création d'une entité. Le paramètre de cette fonction sont les données sous forme de JSON. 
   Elle retourne la nouvelle entité crée. Par exemple :
-```typescript=
+```typescript
 const newUser = await this.repository.create({
     id: 0, 
     lastname: 'Doe', 

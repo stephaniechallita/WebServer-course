@@ -4,7 +4,7 @@ Rapidement, vous constaterez que vous obtenez, normalement, plusieurs dépendenc
 Par exemple, et ce n'est peut-être pas le seul, les modules qui gèrent les procès verbals et les associations dépendent de l'un et de l'autre. En TypeScript, on aura :
 
 * `association.module.ts`
-```typescript=
+```typescript
 @Module({
   imports: [
     /* ommitted for brevity */
@@ -18,7 +18,7 @@ export class AssociationsModule { }
 ```
 
 * `verbal-processes.module.ts`
-```typescript=
+```typescript
 @Module({
     imports: [
     /* ommitted for brevity */
@@ -37,7 +37,7 @@ Pourquoi ? Eh bien pour récupérer `AssociationService`, il faut récupérer de
 Une solution est d'utiliser le décorateur `@forwardRef(() => mon_service)` dans l'`imports` du module ainsi que dans l'injection du service dans le service. 
 Dans notre cas présent, cela donnerait :
 * `association.module.ts`:
-```typescript=
+```typescript
 @Module({
   imports: [
     /* ommitted for brevity */
@@ -51,7 +51,7 @@ export class AssociationsModule { }
 ```
 
 * `verbal-processes.module.ts`:
-```typescript=
+```typescript
 @Module({
     imports: [
     /* ommitted for brevity */
@@ -64,7 +64,7 @@ export class AssociationsModule { }
 export class VerbalProcessesModule { }
 ```
 * `verbal-processes.service.ts`:
-```typescript=
+```typescript
 @Injectable()
 export class VerbalProcessesService {
     constructor(

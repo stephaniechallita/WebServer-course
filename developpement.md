@@ -10,7 +10,7 @@ Vous pouvez (et vous devriez) partir de la solution que nous avons construit dur
 Pour les requêtes sur la base de données, nous avons vu l'utilisation du `find({xx: Equal(xx) })`.
 Sachez qu'il existe une autre syntaxe :
 
-```typescript=
+```typescript
 myRepository.find({
     where: {
         id: idToFind

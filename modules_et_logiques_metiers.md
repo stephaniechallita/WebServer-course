@@ -31,7 +31,7 @@ le `service` des utilisateurs users qui va appeler le `service` des associations
 
 Tout comme le reste, on peut générer un service `users` en utilisant la ligne de commande suivante :
 
-```shell=
+```shell
 $ nest g service users
 CREATE src/users/users.service.spec.ts (453 bytes)
 CREATE src/users/users.service.ts (89 bytes)
@@ -43,7 +43,7 @@ test.  Aussi, cette commande ajoute aux `providers` le nouveau service crée.
 
 ### Code généré du service
 
-```typescript=
+```typescript
 @Injectable()
 export class UsersService {}
 ```
@@ -57,14 +57,14 @@ Nous verrons dans la suite, un exemple d'injection.
 
 Tout d'abord, ajoutez à la définition d'`User` un attribut `age`, de type `number`: 
 
-```typescript=9
+```typescript
 public age: number;
 ```
 
 Déplacez le tableau d'utilisateurs `const users: User[]` déclaré dans le `users.controller` vers le `users.service` et 
 ajoutez l'âge de John Doe, il a 23 ans :
 
-```typescript=5
+```typescript
 {
         id: 0,
         lastname: 'Doe',
@@ -79,7 +79,7 @@ Le `controller` va maintenant appeler le `service` pour réaliser les traitement
 
 C'est là que le décorateur `@Intejectable()` prend tout son sens : on peut simplement déclarer un nouvel attribut dans le constructeur du `controller`, et `NestJS` s'occupe de tout. Voici le ce à quoi resemble le constructor du  `controller` des utilisateurs :
 
-```typescript=
+```typescript
 constructor(
     private service: UsersService
 ) {}
@@ -91,7 +91,7 @@ Une fois le `controller` et le `service` mis à jours, implémenté une méthode
 d'id(`ids: number[]`), et qui calcul la moyenne d'âge des utilisateurs désignés par ces ids. La signature est comme qui 
 suit :
 
-```typescript=
+```typescript
 public getAgeAverageById(ids: number[]) : number {
     ...
 }
@@ -126,7 +126,7 @@ pour satisfaire des dépendances (plus d'info [ici](https://fr.wikipedia.org/wik
 Lorsqu'on génère un `service` avec `NestJS`, il est par défaut injectable. Pour l'injecter dans un autre service il 
 suffit d'appliquer la même méthode que pour les contrôleurs :
 
-```typescript=
+```typescript
 constructor(
     private service: UsersService
 ) {}
@@ -136,7 +136,7 @@ Cependant, comme le `service` provient d'un autre module, il faut explicitement 
 
 Modifiez `users.module.ts` comme qui suit :
 
-```diff=
+```diff
     providers: [UsersService],
 +   exports: [UsersService]
 ```
@@ -144,7 +144,7 @@ Modifiez `users.module.ts` comme qui suit :
 Une fois l'injection faite, implémentez la méthode suivante dans le `service` associations, qui renvoie la moyenne d'âge
 des personnes (désignées par leur `id`) d'une association donnée, désignée par son `id` :
 
-```typescript=
+```typescript
 public getAgeAverageById(id: number): number
 ```
 

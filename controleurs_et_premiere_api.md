@@ -6,7 +6,7 @@ Ici, l'objectif est de créer une couche "contrôleur" pour notre module `users`
 
 Générer le squelette du contrôleur avec la commande suivante :
 
-```shell=
+```shell
 $ nest g controller users
 CREATE src/users/users.controller.spec.ts (485 bytes)
 CREATE src/users/users.controller.ts (99 bytes)
@@ -15,7 +15,7 @@ UPDATE src/users/users.module.ts (170 bytes)
 
 Dans `src/users/users.controller.ts`, on a :
 
-```typescript=
+```typescript
 @Controller('users')
 export class UsersController {}
 ```
@@ -31,7 +31,7 @@ décorateurs, mais cette fois-cu sur les méthodes de la class `UsersController`
 
 Ajoutez la méthode suivante à `UsersController` :
 
-```typescript=
+```typescript
 @Get()
 getAll(): string[] {
     return ['a', 'b', 'c'];
@@ -45,7 +45,7 @@ Il existe des décorateurs pour chacune des méthodes de requêtes : `Get`, `Pos
 
 Lancer le serveur avec `npm run start` et lancer une requête `GET` sur le nouveau endpoint avec la commande suivante :
 
-```shell=
+```shell
 $ curl http://localhost:3000/users 
 ["a","b","c"]%
 ```
@@ -55,7 +55,7 @@ Comme le décorateur `Get()` n'a pas de paramètre, cette méthode gère les req
 
 Modifiez la méthode `getAll()` :
 
-```diff=
+```diff
 - @Get()
 + @Get('all')
 getAll(): string[] {
@@ -65,7 +65,7 @@ getAll(): string[] {
 
 Et testez les deux requêtes suivantes après avoir relancé le serveur :
 
-```shell=
+```shell
 $ curl http://localhost:3000/users
 {"statusCode":404,"message":"Cannot GET /users","error":"Not Found"}%
 $ curl http://localhost:3000/users/all
@@ -92,7 +92,7 @@ Dans ce fichier, on va déclarer une nouvelle classe qui répond au besoin ci-de
 
 Déclarer un tableau d'utilisateurs en constante dans le fichier `UsersController` :
 
-```typescript=
+```typescript
 import { User } from './user.entity';
 
 const users : User[] = [
@@ -134,7 +134,7 @@ requête.
 
 Cela donnera quelque chose comme :
 
-```typescript=
+```typescript
 @Post()
 create(@Body() input: any): User {
     ...
@@ -152,7 +152,7 @@ Pour la création, c'est le backend qui gère les ids.
 
 Pour la récupération des données, on souhaite supporter **au moins** deux ces deux requêtes :
 
-```=
+```shell
 GET http://localhost/users
 GET http://localhost/users/<id>
 # Par exemple
@@ -167,7 +167,7 @@ Pour ce faire, on utilise un string spécial dans le décorateur `Get()` ainsi q
 
 Dans notre cas, on utilisera quelque chose cela :
 
-```typescript=
+```typescript
 @Get(':id')
 getById(@Param() parameter): User {
     ...
