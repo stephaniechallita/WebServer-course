@@ -24,11 +24,6 @@ du service web backend.
 Pour des tests pas à pas, `curl` reste un bon atout mais vous pouvez aussi employer [PostMan](https://www.postman.com/)
 qui fournit une interface graphique pour gérer les paramètres des requêtes.
 
-## Organisation
-
-Le code source du projet doit être poussé sur un dépôt gitlab dédié. Vous veillerez à garder ce dépôt privé ainsi que de
-donner les droits d'accès aux évaluateurs.
-
 ## Projet
 
 Le projet portera sur la numérisation de la gestion des associations par les services publics.
@@ -61,7 +56,14 @@ complétez l'étape 6, 7 et 8, je vous tire mon chapeau.
 
 ## Modalités d'évaluation
 
-Le projet est la seule évaluation du module.
+Le projet est la seule évaluation du module. Le projet sera réalisé en binôme. Vous devrez rendre votre projet 
+sous la forme d’un projet **privé** sur le [GitLab de l’ISTIC](https://gitlab.istic.univ-rennes1.fr) sur lequel vous 
+aurez mis votre code source ainsi qu’un rapport détaillant vos choix de mapping ORM et d'API. Un fichier README 
+à la racine du projet GitLab devra en décrire le contenu et l’organisation.
+Vous devrez inviter vos évaluateurs au projet GitLab et lui envoyer l’adresse du projet par mail au plus tard
+le 22/04/21 à minuit (CET).
+
+Voici les critères d'évaluation utilisés :
 
 - Soutenance de présentation du projet et de la compréhension des notions.
 - Points Bonus si étapes 6, 7, 8.
