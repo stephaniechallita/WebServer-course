@@ -35,14 +35,14 @@ Dans la gestion de ces associations, plusieurs départements entrent en jeux com
 département juridique.
 
 À la fin, l'application devra être capable de :
-- gérer les utilisateurs : création, récupération, listing, mis à jours et suppression.
-- gérer les associations : création, récupération, listing, mis à jours et suppression.
+- gérer les utilisateurs : création, récupération, listing, mise à jour et suppression.
+- gérer les associations : création, récupération, listing, mise à jour et suppression.
 
 Les détails de conception ainsi que les procédures seront décrites au fur et à mesure du projet
 
 ## Étapes du projet
 
-Afin de vous guider, le projet a été divisé en étapes. Vous devez absolument arrivé au moins à l'étape 5. Si vous 
+Afin de vous guider, le projet a été divisé en étapes. Vous devez absolument arriver au moins à l'étape 5. Si vous 
 complétez l'étape 6, 7 et 8, je vous tire mon chapeau.
 
 1. [Premiers pas avec NestJS](./premiers_pas_avec_nestjs.md)
