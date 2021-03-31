@@ -61,7 +61,7 @@ sous la forme d’un projet **privé** sur le [GitLab de l’ISTIC](https://gitl
 aurez mis votre code source ainsi qu’un rapport détaillant vos choix de mapping ORM et d'API. Un fichier README 
 à la racine du projet GitLab devra en décrire le contenu et l’organisation.
 Vous devrez inviter vos évaluateurs au projet GitLab et lui envoyer l’adresse du projet par mail au plus tard
-le 22/04/21 à minuit (CET).
+le 22/04/21 à minuit (CET). La soutenance aura lieu le **23 avril** lors de votre dernière séance de travaux pratiques.
 
 Voici les critères d'évaluation utilisés :
 
