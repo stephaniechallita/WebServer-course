@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Comme énoncé précédemment, chaque module à une et une seule responsabilité métier.
+Comme énoncé précédemment, chaque module a une et une seule responsabilité métier.
 Par exemple, le module `users` est responsable de tous les utilisateurs, tandis que le module `associations` est 
 responsable des associations.
 
 Cependant, pour compléter leurs tâches, les modules doivent parfois (souvent en fait) travailler ensemble.
 
-Dans l'étape précédente, nous avons vu comment développé le "frontend du backend", c'est-à-dire la couche `controller`.
+Dans l'étape précédente, nous avons vu comment développer le "front du backend", c'est-à-dire la couche `controller`.
 Pour rappel, cette couche est responsable de gérer les requêtes HTTP faites par les clients ainsi que de déclarer tous 
 les `endpoints` dont on a besoin.
 
@@ -17,7 +17,7 @@ les `endpoints` dont on a besoin.
 Logiquement, on ne met donc pas la logique métier dans cette couche. On utilise une nouvelle couche, qui est la couche 
 `services` qui va contenir tous les algorithmes pour implémenter notre logique métier.
 
-Les `controllers` vont donc appelé des méthodes des `services` pour effectuer les traitements, obtenir un résultat et le
+Les `controllers` vont donc appeler des méthodes des `services` pour effectuer les traitements, obtenir un résultat et le
 renvoyer aux clients.
 
 Pour que les modules travaillent ensemble, on passe par la couche `services`, c'est-à-dire que c'est les services qui 
