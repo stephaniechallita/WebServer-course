@@ -61,7 +61,7 @@ Par exemple, lorsque nous avons lancer la commande `npm run start`, cette comman
 },
 ```
 
-Vous pouvez étudier ce fichier et essayer les divers commandes pre-configuré. De même, le fichier `package.json` décrit toutes les dépendences et les versions de ces dépendences.
+Vous pouvez étudier ce fichier et essayer les divers commandes pre-configurées. De même, le fichier `package.json` décrit toutes les dépendences et les versions de ces dépendences.
 
 
 ### `src/main.ts`
@@ -92,9 +92,9 @@ src
 └── main.ts
 ```
 
-Ce squelette est voué à disparaître, mis à part le fichier `app.module.ts`, qui va aggréger tous nos modules, il servira de "module root", ainsi que le fichier `main.ts` qui servira à lancer notre backend.
+Ce squelette est vouée à disparaître, mis à part le fichier `app.module.ts`, qui va aggréger tous nos modules, il servira de "module root", ainsi que le fichier `main.ts` qui servira à lancer notre backend.
 
-Vous remarquerez qu'avec `NestJS`, il y a une convention de nommage de fichier : `<business>.<layer>.ts`, ou `<business>` denote la responsabilité métier et `<layer>` dénote la couche, _e.g._ `controller` ou `service`.
+Vous remarquerez qu'avec `NestJS`, il y a une convention de nommage de fichier : `<business>.<layer>.ts`, ou `<business>` dénote la responsabilité métier et `<layer>` dénote la couche, _e.g._ `controller` ou `service`.
 
 ## Création d'un premier module
 
@@ -106,8 +106,8 @@ CREATE src/users/users.module.ts (82 bytes)
 UPDATE src/app.module.ts (312 bytes)
 ```
 
-Avec cette commande, on voit que `nest` à crée un nouveau repertoire : `src/users`, et y a inséré un nouveau fichier `users.module.ts` qui définit le module qui sera responsable des utilisateurs.
-`nest` a également mis à jours le fichier `src/app.module.ts`, notre "module root" pour y importer le nouveau module créee :
+Avec cette commande, on voit que `nest` a créé un nouveau repertoire : `src/users`, et y a inséré un nouveau fichier `users.module.ts` qui définit le module qui sera responsable des utilisateurs.
+`nest` a également mis à jours le fichier `src/app.module.ts`, notre "module root" pour y importer le nouveau module créé :
 
 ```diff
 @Module({
