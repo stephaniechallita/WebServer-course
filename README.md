@@ -19,7 +19,7 @@ code .
 
 Afin de tester le backend, nous allons aussi utiliser des commandes [`curl`](https://curl.se/download.html). 
 Veillez à bien installer cette commande et à la rendre disponible dans votre terminal (_e.g._ ajoutez le à votre variable
-d'environnement `$PATH` si vous êtes sur Linux). Des scripts `curl` seront fourni afin de vérifier votre implémentation 
+d'environnement `$PATH` si vous êtes sur Linux). Des scripts `curl` seront fournis afin de vérifier votre implémentation 
 du service web backend.
 Pour des tests pas à pas, `curl` reste un bon atout mais vous pouvez aussi employer [PostMan](https://www.postman.com/)
 qui fournit une interface graphique pour gérer les paramètres des requêtes.
@@ -38,7 +38,7 @@ département juridique.
 - gérer les utilisateurs : création, récupération, listing, mise à jour et suppression.
 - gérer les associations : création, récupération, listing, mise à jour et suppression.
 
-Les détails de conception ainsi que les procédures seront décrites au fur et à mesure du projet
+Les détails de conception ainsi que les procédures seront décrites au fur et à mesure du projet.
 
 ## Étapes du projet
 
