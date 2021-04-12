@@ -67,4 +67,4 @@ Voici les critères d'évaluation utilisés :
 
 - Soutenance de présentation du projet et de la compréhension des notions.
 - Points Bonus si étapes 6, 7, 8.
-- Appréciation de la gestion du dépôt git : nombre de commits message de commits, régularité des commits, etc.
+- Appréciation de la gestion du dépôt git : nombre de commits, message de commits, régularité des commits, etc.
