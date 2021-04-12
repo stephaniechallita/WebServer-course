@@ -165,7 +165,7 @@ Le second nécessite l'implémentation du support d'une nouvelle URL, paramétr�
 
 Pour ce faire, on utilise un string spécial dans le décorateur `Get()` ainsi qu'un paramètre, avec le décorateur `@Param()`.
 
-Dans notre cas, on utilisera quelque chose cela :
+Dans notre cas, on utilisera quelque chose comme cela :
 
 ```typescript
 @Get(':id')
@@ -182,7 +182,7 @@ nous permet de récupérer cette valeur en faisant `parameter.id`.
 Regarder de ce [côté](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) pour 
 trouver une api qui facilitera l'implémentation.
 
-### Mises à jour
+### Mise à jour
 
 La mise à jour mixera les notions vues pour la création et la récupération.
 On implémentera la méthode qui supporte les requêtes `PUT` sur l'URL `http://localhost:3000/users/<id>`, et qui prend en
@@ -199,5 +199,5 @@ tableau.
 
 ## Tests
 
-Une fois que vous avez implémentés toutes les méthodes, et que votre backend supporte tous les `endpoints` décrits 
+Une fois que vous avez implémenté toutes les méthodes, et que votre backend supporte tous les `endpoints` décrits 
 ci-dessus, vous pouvez le tester avec ce [script de test](./scripts/controleurs_et_premiere_api_test.sh).
