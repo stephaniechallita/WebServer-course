@@ -97,7 +97,7 @@ import { User } from './user.entity';
 
 const users : User[] = [
     {
-        id: '0',
+        id: 0,
         lastname: 'Doe',
         firstname: 'John'
     }
