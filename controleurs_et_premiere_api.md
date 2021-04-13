@@ -20,8 +20,8 @@ Dans `src/users/users.controller.ts`, on a :
 export class UsersController {}
 ```
 
-Ici, le "decorator" `@Controller('users')` (on peut voir ça comme une annotation à la Java) spécifie que le 
-`UsersController` classe est un contrôleur.
+Ici, le "decorator" `@Controller('users')` (on peut voir ça comme une annotation à la Java) spécifie que la classe
+`UsersController` est un contrôleur.
 Il va permettre de gérer les requêtes faites par un client.
 
 ## Premier endpoint
