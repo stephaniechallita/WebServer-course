@@ -142,9 +142,9 @@ create(@Body() input: any): User {
 ```
 À vous de compléter le corps de la méthode.
 
-`any` est de "n'importe quel" type, et peut-être manipuler comme du `JSON`.
+`any` est de "n'importe quel" type, et peut-être manipulé comme du `JSON`.
 
-Si `input = { id: '0', lastname: 'Doe', firstname: 'John' }` alors `input.id` permet d'accéder alors valeur `id` du JSON.
+Si `input = { id: '0', lastname: 'Doe', firstname: 'John' }` alors `input.id` permet d'accéder à la valeur `id` du JSON.
 
 Pour la création, c'est le backend qui gère les ids.
 
