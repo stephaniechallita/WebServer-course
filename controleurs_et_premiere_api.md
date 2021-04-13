@@ -128,7 +128,7 @@ Pour la création, il faut implémenter un nouvel `endpoint` qui supporte la mé
 Pour cela, il faut utiliser le décorateur `@Post()`
 
 Ce nouvel `endpoint` a aussi besoin de données d'entrée (input), qui sont les informations du nouvel utilisateur.
-Pour cela, il faut ajouter un paramètre de la méthode qui va supporter ce `endpoint` le paramètre suivant.
+Pour cela, il faut ajouter un paramètre de la méthode qui va supporter ce `endpoint`.
 Sur ce paramètre, on utilise le décorateur `@Body()` pour spécifier que le paramètre aura les valeurs du "body" de ma 
 requête.
 
@@ -140,7 +140,7 @@ create(@Body() input: any): User {
     ...
 }
 ```
-À vous de completer le corps de la méthode.
+À vous de compléter le corps de la méthode.
 
 `any` est de "n'importe quel" type, et peut-être manipuler comme du `JSON`.
 
