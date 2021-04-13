@@ -92,7 +92,7 @@ src
 └── main.ts
 ```
 
-Ce squelette est vouée à disparaître, mis à part le fichier `app.module.ts`, qui va aggréger tous nos modules, il servira de "module root", ainsi que le fichier `main.ts` qui servira à lancer notre backend.
+Ce squelette est voué à disparaître, mis à part le fichier `app.module.ts`, qui va aggréger tous nos modules, il servira de "module root", ainsi que le fichier `main.ts` qui servira à lancer notre backend.
 
 Vous remarquerez qu'avec `NestJS`, il y a une convention de nommage de fichier : `<business>.<layer>.ts`, ou `<business>` dénote la responsabilité métier et `<layer>` dénote la couche, _e.g._ `controller` ou `service`.
 
