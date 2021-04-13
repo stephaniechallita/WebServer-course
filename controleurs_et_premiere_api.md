@@ -118,7 +118,7 @@ Maintenant que vous avez un modèle d'utilisateur, implémenter toutes les méth
 
 Il s'agit de manipuler le tableau précédemment déclaré comme s'il s'agissait de votre base de données.
 
-Regarder la section [Tests](https://hackmd.io/@nMppG5vYSi6CqfaB-nrZ5w/SkWcB2Xhw#Tests) où un script cURL est fournit 
+Regarder la section [Tests](https://hackmd.io/@nMppG5vYSi6CqfaB-nrZ5w/SkWcB2Xhw#Tests) où un script cURL est fourni 
 pour vous aider à tester votre backend.
 
 ### Création
