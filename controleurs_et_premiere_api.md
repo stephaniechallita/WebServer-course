@@ -27,7 +27,7 @@ Il va permettre de gérer les requêtes faites par un client.
 ## Premier endpoint
 
 Pour définir un "endpoint", c'est-à-dire, une URL qui permet d'accéder aux resources du serveur, on utilise aussi des 
-décorateurs, mais cette fois-cu sur les méthodes de la class `UsersController`.
+décorateurs, mais cette fois-ci sur les méthodes de la class `UsersController`.
 
 Ajoutez la méthode suivante à `UsersController` :
 
