@@ -32,6 +32,8 @@ décorateurs, mais cette fois-ci sur les méthodes de la class `UsersController`
 Ajoutez la méthode suivante à `UsersController` :
 
 ```typescript
+import { ..., Get, ... } from '@nestjs/common';
+...
 @Get()
 getAll(): string[] {
     return ['a', 'b', 'c'];
@@ -111,6 +113,8 @@ export class UsersController {
 Votre modèle de `User` doit répondre parfaitement à cette définition. Ainsi, votre backend peut automatiquement 
 transformer les données (qui sont en format `JSON` ici) en des objets d'instance `User`.
 
+Ici, on initialise le tableau `users` avec un utilisateur dont l'id est égal à zéro avec pour nom "Doe" et prénom "John".
+
 ## CRUD
 
 Maintenant que vous avez un modèle d'utilisateur, implémenter toutes les méthodes `CRUD` (**C**reate, **R**etrieve, 
@@ -135,6 +139,8 @@ requête.
 Cela donnera quelque chose comme :
 
 ```typescript
+import { ..., Body, Post, ... } from '@nestjs/common';
+...
 @Post()
 create(@Body() input: any): User {
     ...
@@ -168,6 +174,8 @@ Pour ce faire, on utilise un string spécial dans le décorateur `Get()` ainsi q
 Dans notre cas, on utilisera quelque chose comme cela :
 
 ```typescript
+import { ..., Param, ... } from '@nestjs/common';
+...
 @Get(':id')
 getById(@Param() parameter): User {
     ...
@@ -196,6 +204,23 @@ Pour supprimer un élément d'un tableau en TypeScript, regardez du côté de
 
 Utiliser la fonction `delete users[id]` remplace la valeur par `undefined`, et ne retire pas complétement l'élément du 
 tableau.
+
+### Traitement des erreurs
+
+Pour traiter les erreurs, par exemple lorsqu'il n'existe pas d'utilisateur qui a l'id fourni par le client, alors le serveur doit répondre avec un code d'erreur HTTP approprié : 404.
+
+Pour implémenter cela vous pouvez utiliser :
+
+```typescript
+if (something()) {
+	throw new HttpException('message', HTTP_STATUS);
+}
+```
+Où il faut remplacer `HTTP_STATUS` par un attribut de la classe `Http_Status`. Par exemple, pour un 404 Not found, on va faire :
+
+```typescript
+throw new HttpException(`Could not find a user with the id ${parameter.id}`, HttpStatus.NOT_FOUND)
+```
 
 ## Tests
 

@@ -36,7 +36,8 @@ Pour tester, ouvrez un second terminal et lancer la commande suivante :
 curl http://localhost:3000
 ```
 
-Cette commande va faire une requête `GET`, sur l'url `http://localhost`, sur le port `3000`. C'est à cette adresse et sur ce port que le backend `NestJS` tourne par défaut.
+Quand aucune méthode HTTP n'est spécifiée, `curl` utilise la méthode HTTP `GET` par défaut.
+Cette commande va donc faire une requête `GET`, sur l'url `http://localhost`, sur le port `3000`. C'est à cette adresse et sur ce port que le backend `NestJS` tourne par défaut.
 
 Vous devriez observer sur la console le message suivant :
 
@@ -49,7 +50,8 @@ Hello World!%
 
 ### `package.json`
 
-Situé à la racine du projet, ce fichier permet de spécifier les dépendences et des routines que vous souhaitez lancer sur votre backend.
+Situé à la racine du projet, ce fichier permet de spécifier les dépendences et des routines que vous souhaitez lancer sur votre backend. 
+On peut voir le `package.json` comme le `pom.xml` d'un projet maven, pour un projet NestJS (en fait, pour un projet NodeJS mais c'est un détail).
 
 Par exemple, lorsque nous avons lancé la commande `npm run start`, cette commande exécute la commande `nest start`. Cette correspondance est définie dans le fichier `package.json`, plus particulièrement dans l'élément `scripts`:
 
