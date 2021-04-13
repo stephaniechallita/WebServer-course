@@ -51,7 +51,7 @@ Hello World!%
 
 Situé à la racine du projet, ce fichier permet de spécifier les dépendences et des routines que vous souhaitez lancer sur votre backend.
 
-Par exemple, lorsque nous avons lancer la commande `npm run start`, cette commande éxécute la commande `nest start`. Cette correspondance est définit dans le fichier `package.json`, plus particulièrement dans l'élément `scripts`:
+Par exemple, lorsque nous avons lancé la commande `npm run start`, cette commande exécute la commande `nest start`. Cette correspondance est définie dans le fichier `package.json`, plus particulièrement dans l'élément `scripts`:
 
 ```json
 "scripts": {
