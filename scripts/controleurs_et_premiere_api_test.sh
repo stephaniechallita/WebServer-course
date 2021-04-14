@@ -39,8 +39,8 @@ delete() {
 get http://localhost:3000/users 200
 get http://localhost:3000/users/0 200
 get http://localhost:3000/users/1 404
-post http://localhost:3000/users 201 "{ \"firstname\": \"Jane\", \"lastname\": \"Doe\"}"
+post http://localhost:3000/users 201 "firstname=Jane&lastname=Doe"
 get http://localhost:3000/users/1 200
-put http://localhost:3000/users/1 200 "{ \"firstname\": \"Janette\", \"lastname\": \"Doe\"}"
+put http://localhost:3000/users/1 200 "firstname=Janette&lastname=Doe"
 delete http://localhost:3000/users/1 200
 get http://localhost:3000/users/1 404
