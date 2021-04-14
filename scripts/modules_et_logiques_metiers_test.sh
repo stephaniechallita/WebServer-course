@@ -39,18 +39,18 @@ delete() {
 get http://localhost:3000/users 200
 get http://localhost:3000/users/0 200
 get http://localhost:3000/users/1 404
-post http://localhost:3000/users 201 "{ \"firstname\": \"Jane\", \"lastname\": \"Doe\", \"age\": 23}"
+post http://localhost:3000/users 201 "firstname=Jane&lastname=Doe&age=23"
 get http://localhost:3000/users/1 200
-put http://localhost:3000/users/1 200 "{ \"firstname\": \"Janette\", \"lastname\": \"Doe\", \"age\": 32}"
+put http://localhost:3000/users/1 200 "firstname=Janette&lastname=Doe&age=32"
 delete http://localhost:3000/users/1 200
 get http://localhost:3000/users/1 404
 
 get http://localhost:3000/associations 200
 get http://localhost:3000/associations/0 200
 get http://localhost:3000/associations/1 404
-post http://localhost:3000/associations 201 "{ \"idUsers\": [1], \"name\": \"Assoc1\"}"
+post http://localhost:3000/associations 201 "idUsers[]=1&name=Assoc1"
 get http://localhost:3000/associations/1 200
-post http://localhost:3000/users 201 "{ \"firstname\": \"Jane\", \"lastname\": \"Doe\", \"age\": 23}"
+post http://localhost:3000/users 201 "firstname=Jane&lastname=Doe&age=23"
 put http://localhost:3000/associations/1 200 "idUsers[]=1&idUsers[]=2&name=Assoc1"
 delete http://localhost:3000/associations/1 200
 get http://localhost:3000/associations/1 404
