@@ -10,8 +10,8 @@ request() {
         echo "curl -X ${method} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}"
         http_status=`curl -X ${method} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}`
     else
-        echo "curl -X ${method} -d '${parameters}' -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}"
-        http_status=`curl -X ${method} -d '${parameters}' -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}`
+        echo "curl -X ${method} -d ${parameters} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}"
+        http_status=`curl -X ${method} -d ${parameters} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}`
     fi
     if [ ${http_status} != ${expected_http_status} ]
     then
