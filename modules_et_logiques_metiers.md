@@ -107,7 +107,7 @@ sont toujours au pluriel).
 Dans le `service`, déclarez un tableau d'associations : `const associations: Association[]` et remplissez-le avec au 
 moins une association.
 
-Implémentez, de la même manière pour que les utilisateurs, les opérations CRUD des associations définies comme suit :
+Implémentez, de la même manière que pour les utilisateurs, les opérations CRUD des associations définies comme suit :
 
 | Association |
 | --- |
