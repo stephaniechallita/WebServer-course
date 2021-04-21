@@ -38,8 +38,8 @@ CREATE src/users/users.service.ts (89 bytes)
 UPDATE src/users/users.module.ts (247 bytes)
 ```
 
-Cette commande génére deux nouveaux fichiers : `users.service.ts`, le service, et `users.service.spec.ts` son fichier de
-test.  Aussi, cette commande ajoute aux `providers` le nouveau service crée.
+Cette commande génère deux nouveaux fichiers : `users.service.ts`, le service, et `users.service.spec.ts` son fichier de
+test.  Aussi, cette commande ajoute aux `providers` le nouveau service créé.
 
 ### Code généré du service
 
@@ -73,11 +73,11 @@ ajoutez l'âge de John Doe, il a 23 ans :
 }
 ```
 
-Vous devez maintenant mettre à jours toutes les fonctions du `controller` pour que la logiques soit implémentée dans le `service`.
+Vous devez maintenant mettre à jour toutes les fonctions du `controller` pour que la logique soit implémentée dans le `service`.
 
 Le `controller` va maintenant appeler le `service` pour réaliser les traitements en fonction des requêtes des clients. Pour cela, il a besoin d'une instance de service.
 
-C'est là que le décorateur `@Intejectable()` prend tout son sens : on peut simplement déclarer un nouvel attribut dans le constructeur du `controller`, et `NestJS` s'occupe de tout. Voici le ce à quoi resemble le constructor du  `controller` des utilisateurs :
+C'est là que le décorateur `@Intejectable()` prend tout son sens : on peut simplement déclarer un nouvel attribut dans le constructeur du `controller`, et `NestJS` s'occupe de tout. Voici à quoi ressemble le constructor du  `controller` des utilisateurs :
 
 ```typescript
 constructor(
@@ -87,9 +87,8 @@ constructor(
 
 Dans le `controller`, vous pouvez faire appel aux méthodes du `service` avec `this.service.myMethod(myParameter);`.
 
-Une fois le `controller` et le `service` mis à jours, implémenté une méthode qui prend entrée un tableau 
-d'id(`ids: number[]`), et qui calcul la moyenne d'âge des utilisateurs désignés par ces ids. La signature est comme qui 
-suit :
+Une fois le `controller` et le `service` mis à jour, implémentez une méthode qui prend en entrée un tableau 
+d'id(`ids: number[]`), et qui calcule la moyenne d'âge des utilisateurs désignés par ces ids. La signature est comme suit :
 
 ```typescript
 public getAgeAverageById(ids: number[]) : number {
@@ -102,13 +101,13 @@ Les fonctions [`filter`](https://www.tutorialspoint.com/typescript/typescript_ar
 
 ## Module, Controlleur et Service Association
 
-Généré un module, un contrôleur et un service `associations` (par conventions, les modules, contrôleurs, services, etc. 
+Générez un module, un contrôleur et un service `associations` (par conventions, les modules, contrôleurs, services, etc. 
 sont toujours au pluriel).
 
 Dans le `service`, déclarez un tableau d'associations : `const associations: Association[]` et remplissez-le avec au 
 moins une association.
 
-Implémentez, de la même manière pour que les utilisateurs, les opérations CRUD des associations définit comme qui suit :
+Implémentez, de la même manière pour que les utilisateurs, les opérations CRUD des associations définies comme suit :
 
 | Association |
 | --- |
