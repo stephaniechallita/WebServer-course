@@ -3,7 +3,7 @@
 Une application web digne de ce nom utilise une base de données pour gérer et sauvegarder ses données, et non pas des 
 tableaux codés en dur !
 
-C'est pour cela, dans cette partie, nous allons mettre en place la base de données, et ainsi utilisé 
+C'est pour cela, dans cette partie, nous allons mettre en place la base de données, et ainsi utiliser 
 [TypeORM](https://typeorm.io/#/) qui est une bibliothèque d'"object relational mapping" (ORM) en TypeScript.
 
 Pour la base de données, nous utiliserons [SQLite](https://www.sqlite.org/index.html) qui permet de gérer une base de 
@@ -12,7 +12,7 @@ une base de donnée rapidement, légère et portable. Étant donné que nous n'a
 application, SQLite remplira parfaitement son rôle.
 
 Cependant, SQLite n'est pas le choix par défaut pour une application de production. Voici un petit comparatif des 
-differentes base de données relationnelles est disponibles [ici](https://www.digitalocean.com/community/tutorials/sqlite-vs-mysql-vs-postgresql-a-comparison-of-relational-database-management-systems) (EN).
+differentes bases de données relationnelles [ici](https://www.digitalocean.com/community/tutorials/sqlite-vs-mysql-vs-postgresql-a-comparison-of-relational-database-management-systems) (EN).
 
 ## Préparatifs
 
@@ -67,12 +67,12 @@ Puis importer dans votre `app.module.ts` le module `TypeORMModule` de la façon 
 export class AppModule {}
 ```
 
-Ici, on spécifie le type de base de donnée ainsi que le fichier utilisé. Vérifier que lorsque vous lancez votre backend,
+Ici, on spécifie le type de base de données ainsi que le fichier utilisé. Vérifier que lorsque vous lancez votre backend,
 il n'y a pas d'erreur : `npm run start`.
 
 ## Entités
 
-Nous allons maintenant faire de nos entités, _i.e._ `user.entity.ts` et `association.entity.ts` de réel entité d'un point
+Nous allons maintenant faire de nos entités, _i.e._ `user.entity.ts` et `association.entity.ts` de réels entités d'un point
 de vue TypeORM, c'est-à-dire, des objets à sauvegarder en base.
 
 Pour ce faire, vous devez utiliser les décorateurs correctement. Référez-vous au cours dans lequel nous avons vu ces 
@@ -87,7 +87,7 @@ Pensez-bien à quels décorateurs vous allez utiliser. Vous ne devriez pas modif
 + public users: User[];
 ```
 
-Mettez à jours le service en conséquence.
+Mettez à jour le service en conséquence.
 
 ## Injection du Repository
 
@@ -112,8 +112,8 @@ export class UsersService {
 +) {}
 ```
 
-Ici, on supprime la "base de données", _i.e._ le tableau que l'on utilisait, et on inject un Repository, qui devient un 
-attribute de notre classe `UserService`.
+Ici, on supprime la "base de données", _i.e._ le tableau que l'on utilisait, et on injecte un Repository, qui devient un 
+attribut de notre classe `UserService`.
 
 Vous devrez aussi ajouter dans le `user.module.ts` l'import suivant :
 
@@ -126,14 +126,14 @@ Vous devrez aussi ajouter dans le `user.module.ts` l'import suivant :
 })
 ```
 
-Mettez à jours `users.service.ts` et faites de même pour `associations.service.ts` et `associations.module.ts` pour que 
-celui-ci n'utilise plus de tableau mais la classe `Repository` de TypeORM.
+Mettez à jour `users.service.ts` et faites de même pour `associations.service.ts` et `associations.module.ts` pour que 
+ceux-ci n'utilisent plus de tableau mais la classe `Repository` de TypeORM.
 
 ### API de Repository
 
 Concernant la manipulation du `Repository`, toutes les méthodes des repository sont asynchrones. Pour une question de 
 facilité, on utilisera le mot-clés `await` devant chaque appel de méthode pour attendre son résultat. Cela nécessitera 
-de déclarer vos méthodes de service asynchrone aussi(avec le mot-clé `async` ainsi que de modifier son retour en Promesse,
+de déclarer vos méthodes de service asynchrone aussi (avec le mot-clé `async` ainsi que de modifier son retour en Promesse,
 _e.g._ `Promise<User>`).
 
 Par exemple pour `getById`, on aura :
@@ -145,8 +145,8 @@ Par exemple pour `getById`, on aura :
 
 Voici les méthodes qui nous intéresseront pour le moment :
 
-- `repository.create({})` : création d'une entité. Le paramètre de cette fonction sont les données sous forme de JSON. 
-  Elle retourne la nouvelle entité crée. Par exemple :
+- `repository.create({})` : création d'une entité. Le paramètre de cette fonction est les données sous forme de JSON. 
+  Elle retourne la nouvelle entité créée. Par exemple :
 ```typescript
 const newUser = await this.repository.create({
     id: 0, 
@@ -157,21 +157,21 @@ const newUser = await this.repository.create({
 ```
 **Attention** la méthode `create` n'enregistre pas la nouvelle entité dans la base de données. Pour cela, voyez la 
 méthode `save()`.
-- `save(entity)` : Sauvegarde l'entité passer en paramètre dans la base de données. La méthode `save` est utilisée pour 
+- `save(entity)` : sauvegarde l'entité passée en paramètre dans la base de données. La méthode `save` est utilisée pour 
   la création et la mise à jour.
 - `repository.find(FindOperator)` : retourne toutes les entités du repository qui correspondent au `FindOperator`(voir 
   ci-dessous) passé en paramètre.
 - `repository.findOne(FindOperator)` : retourne une entité de la base de données qui correspond au `FindOperator`(voir 
   ci-dessous) passé en paramètre.
-- `repository.delete(entity)` : Supprime de la base de données l'entité passée en paramètre.
-- `FindOperator` : On peut voir les `FindOperator` comme des prédicats sur les entités. Ils servent à paramétrer les 
+- `repository.delete(entity)` : supprime de la base de données l'entité passée en paramètre.
+- `FindOperator` : on peut voir les `FindOperator` comme des prédicats sur les entités. Ils servent à paramétrer les 
   recherches. Par exemple, le `FindOperator` le plus demandé serait celui qui permet de trouver une entité avec un 
   certain id. Celui-ci s'écrit comme qui suit :
 ```typescript=
 this.repository.find({id: Equal(idToFind)});
 ```
 Le `FindOperator` a une forme de JSON, où la clé est la colonne sur laquelle on cherche à mettre la condition, et la 
-valeur est le prédicat. Ici, on cherche l'`id` qui est égale `Equal()` à l'`idToFind`. Pour plus d'information sur les 
+valeur est le prédicat. Ici, on cherche l'`id` qui est égal `Equal()` à l'`idToFind`. Pour plus d'informations sur les 
 `FindOperator`, voir la [documentation officielle](https://typeorm.io/#/find-options).
 
 ## Tests
