@@ -87,7 +87,8 @@ Pensez-bien à quels décorateurs vous allez utiliser. Vous ne devriez pas modif
 + public users: User[];
 ```
 
-Mettez à jour le AssociationsService, en conséquence.
+Mettez à jour le AssociationsService, en conséquence. Pour la création d'Association, nous partirons du principe que tous les Users (donc membres de l'Association) existent **avant** la création de l'Association. De ce fait, les données d'entrée pour la création d'Association restent les mêmes que pour le [TP3](https://github.com/stephaniechallita/WebServer/blob/master/modules_et_logiques_metiers.md) : `idUsers: number[] ,name: string`.
+À partir des `idUsers`, l'AssociationsService doit demander au UsersService de lui fournir les Users correspondant afin de créer la nouvelle Association.
 
 Pour chaque nouvelle entité déclarée, via le décorateur `@Entity()`, vous devez enregistrer cette nouvelle entité auprès de TypeORM dans le AppModule :
 
@@ -111,6 +112,32 @@ export class AppModule {}
 ```
 
 Il s'agit ici de dire explicitement à TypeORM quelles sont les entités de notre serveur. Il pourra alors gérer beaucoup de choses pour nous, comme par exemple les `Repository`, la couche que nous verrons juste après et qui s'occupe de la communication avec la base de données.
+
+### Configuration de la récupération des données associées
+
+Pour la gestion de la récupération des données associées, lazy loading ou tout charger, vous pouvez utiliser le paramètre `{eager: true}` dans les décorateurs d'associations (`@ManyToMany()` par exemple) pour signaler à TypeOrm que vous souhaitez charger toutes les données en une seule fois (quand la valeur est true). 
+Pour mettre en place le lazy loading, vous devez utiliser `false` (ou ne pas utiliser `eager`par défaut), et utiliser une Promesse comme type pour votre attribut. Pour récupérer la valeur, vous devrez alors utiliser soit un `await` soit une construction `.then()`.
+
+Par exemple, pour le `@ManyToMany` entre Association et User, on aura :
+
+Pour le lazy loading, `association.entity.ts`:
+```typescript
+/* ... */
+  @ManytoMany(type => User)
+  @JoinTable()
+  users: Promise<User[]>
+/* ... */
+```
+Pour tout charger à chaque requête, `association.entity.ts`:
+```typescript
+/* ... */
+  @ManytoMany(type => User, { eager: true })
+  @JoinTable()
+  users: User[]
+/* ... */
+```
+
+Cette configuration n'affecte pas les associations (au sens relationnel) sous-jacentes, e.g. si j'ai un eager sur les users d'une association, ça ne veut pas dire que j'ai eager sur une association d'une autre entité aux users. Chaque association doit/peut être configurée.
 
 ## Injection du Repository
 
