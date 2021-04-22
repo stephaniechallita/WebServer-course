@@ -87,7 +87,8 @@ Pensez-bien à quels décorateurs vous allez utiliser. Vous ne devriez pas modif
 + public users: User[];
 ```
 
-Mettez à jour le AssociationsService, en conséquence.
+Mettez à jour le AssociationsService, en conséquence. Pour la création d'Association, nous partirons du principe que tous les Users (donc membres de l'Association) existent **avant** la création de l'Association. De ce fait, les données d'entrée pour la création d'Association restent les mêmes que pour le [TP3](https://github.com/stephaniechallita/WebServer/blob/master/modules_et_logiques_metiers.md) : `idUsers: number[] ,name: string`.
+À partir des `idUsers`, l'AssociationsService doit demander au UsersService de lui fournir les Users correspondant afin de créer la nouvelle Association.
 
 Pour chaque nouvelle entité déclarée, via le décorateur `@Entity()`, vous devez enregistrer cette nouvelle entité auprès de TypeORM dans le AppModule :
 
