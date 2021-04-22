@@ -87,7 +87,30 @@ Pensez-bien à quels décorateurs vous allez utiliser. Vous ne devriez pas modif
 + public users: User[];
 ```
 
-Mettez à jour le service en conséquence.
+Mettez à jour le AssociationsService, en conséquence.
+
+Pour chaque nouvelle entité déclarée, via le décorateur `@Entity()`, vous devez enregistrer cette nouvelle entité auprès de TypeORM dans le AppModule :
+
+```diff
+@Module({
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'mydatabase.db',
+      entities: [
++        User,
++        Association
+      ],
+      synchronize: true,
+    }),
+    UsersModule, AssociationsModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+```
+
+Il s'agit ici de dire explicitement à TypeORM quelles sont les entités de notre serveur. Il pourra alors gérer beaucoup de choses pour nous, comme par exemple les `Repository`, la couche que nous verrons juste après et qui s'occupe de la communication avec la base de données.
 
 ## Injection du Repository
 
