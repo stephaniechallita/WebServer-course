@@ -53,7 +53,7 @@ $ curl http://localhost:3000/users
 ```
 
 Comme le décorateur `Get()` n'a pas de paramètre, cette méthode gère les requêtes `GET` sur l'URL 
-`http://localhost:3000/users`, ou `users` est l'endpoint "général" du controller, spécifié avec le décorateur `@Controller('users')`
+`http://localhost:3000/users`, où `users` est l'endpoint "général" du controller, spécifié avec le décorateur `@Controller('users')`
 
 Modifiez la méthode `getAll()` :
 
@@ -73,6 +73,10 @@ $ curl http://localhost:3000/users
 $ curl http://localhost:3000/users/all
 ["a","b","c"]%
 ```
+
+Comme nous avons modifié le décorateur de la méthode `getAll()`, de `Get()` à `Get('all')`, l'endpoint gérer par notre méthode `getAll()` est `http://localhost:3000/users/all` et non plus `http://localhost:3000/users`, d'où le `404 Not Found` retourné.
+
+En fait, l'endpoint géré par une méthode avec un décorateur de méthode HTTP (`Get()`, `Post()`, etc.) est la concaténation de l'endpoint général du contrôleur, dans notre cas `'users'` car nous avons `@Controller('users')`, et de l'endpoint spécifié par le décorateur de la méthode, dans notre cas `'all'` car nous avons `Get('all')`. Dans le cas où le décorateur de méthode ne spécifie pas d'endpoint, alors méthode gérera l'endpoint générale du contrôleur.
 
 ### Astuce
 
@@ -115,15 +119,12 @@ transformer les données (qui sont en format `JSON` ici) en des objets d'instanc
 
 Ici, on initialise le tableau `users` avec un utilisateur dont l'id est égal à zéro avec pour nom "Doe" et prénom "John".
 
+Il s'agit de manipuler le tableau précédemment déclaré comme s'il s'agissait de votre base de données. Dans la suite du projet, nous remplacerons ce tableau par une véritable base de données.
+
 ## CRUD
 
 Maintenant que vous avez un modèle d'utilisateur, implémenter toutes les méthodes `CRUD` (**C**reate, **R**etrieve, 
 **U**pdate, **D**elete) des utilisateurs dans `UsersController`.
-
-Il s'agit de manipuler le tableau précédemment déclaré comme s'il s'agissait de votre base de données.
-
-Regarder la section [Tests](https://hackmd.io/@nMppG5vYSi6CqfaB-nrZ5w/SkWcB2Xhw#Tests) où un script cURL est fourni 
-pour vous aider à tester votre backend.
 
 ### Création
 
@@ -154,24 +155,51 @@ Si `input = { id: '0', lastname: 'Doe', firstname: 'John' }` alors `input.id` pe
 
 Pour la création, c'est le backend qui gère les ids.
 
+
+Voici une commande CURL qui peut vous servir à tester votre implémentation :
+
+```sh
+$ curl -X POST -d 'firstname=Jane&lastname=Doe' http://localhost:3000/users/
+{"id":1,"firstname":"Jane","lastname":"Doe"}
+```
+
+Faites attention, si vous modifier l'état de votre tableau `users`, il se peut que les résultats des requêtes soient differents.
+Dans le doute, relancer manuellement votre backend, et votre tableau `users` sera de nouveau initialisé uniquement avec l'élement par défaut, _i.e._
+
+```typescript
+ {
+    id: 0,
+    lastname: 'Doe',
+    firstname: 'John'
+}
+```
+
 ### Récupération des données
 
 Pour la récupération des données, on souhaite supporter **au moins** deux ces deux requêtes :
 
-```shell
-GET http://localhost/users
-GET http://localhost/users/<id>
-# Par exemple
-GET http://localhost/users/0
-# Doit me retourner l'utilisateur avec l'id 0, c'est-à-dire John Doe.
+1. `GET http://localhost:3000/users` => renvoie toutes les utilisateurs, _i.e._ le tableau `users`.
+2. `GET http://localhost:3000/users/:id` => ou :id doit être remplacé par un nombre représentant l'id de l'utilisateur qu'on souhaite récupérer.
+Par exemple, si je souhaite récupérer l'élement par défaut de mon tableau `users`, je ferais :
+GET http://localhost/users/0, et le retour devrait être `{id: 0, lastname: Doe, firstname: John}`.
+
+Le premier endpoint est plutôt immédiat. Inspirez-vous des endpoints qui ont été faite à la section au-dessus "Premier endpoint".
+
+Voici une commande CURL pour tester si votre backend supporte bien l'endpoint http://localhost/users : 
+
+```sh
+$ curl http://localhost:3000/users
+[{"id":0,"lastname":"Doe","firstname":"John"}]
 ```
 
-Le premier endpoints est plutôt immédiat.
-Le second nécessite l'implémentation du support d'une nouvelle URL, paramétrée, ici par l'id.
+Vous noterez la précense des brackets [] qui signifie qu'il s'agit d'un tableau.
+
+
+Le second endpoint pourrait être qualifié de "dynamique", c'est-à-dire qu'il s'agit ici d'un modèle d'endpoint, où on a dans l'endpoint un paramètre l'`id`.
 
 Pour ce faire, on utilise un string spécial dans le décorateur `Get()` ainsi qu'un paramètre, avec le décorateur `@Param()`.
 
-Dans notre cas, on utilisera quelque chose comme cela :
+Dans notre cas, on utilisera l'endpoint de méthode `:id`. Cela donnera quelque chose comme cela :
 
 ```typescript
 import { ..., Param, ... } from '@nestjs/common';
@@ -190,20 +218,63 @@ nous permet de récupérer cette valeur en faisant `parameter.id`.
 Regarder de ce [côté](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) pour 
 trouver une api qui facilitera l'implémentation.
 
+Voici une commande CURL pour tester si votre backend supporte bien l'endpoint http://localhost/users/:id : 
+
+```sh
+$ curl http://localhost:3000/users/0
+{"id":0,"lastname":"Doe","firstname":"John"}
+```
+
+Vous noterez l'absence des brackets [] qui signifie qu'il s'agit d'un élément du tableau.
+
+#### Digression sur les endpoints dynamiques
+
+On peut utiliser ce genre de paramètre autant que l'on souhaite. Par exemple, je peux supporter l'url suivante : `users/0/api/John/` grâce au décorateur suivante : `@Get(':id/api/:lastname)` (en rappelant que le `users` vient de l'endpoint général du contrôleur). Pour récupérer les valeurs, on utilise toujours le paramètre décoré avec `@Param()`. 
+Pour conlure, voici un exemple complet : 
+
+```typescript
+@Get(':id/api/:lastname')
+cetteMéthodeNeDoitPasÊtreImplémentée(@Param() parameter): void {
+    console.log(parameter.id);
+    console.log(parameter.lastname);
+}
+```
+
+En faisant `curl http://localhost:3000/users/0/api/John`, j'aurais sur la console du serveur :
+```txt
+0
+John
+```
+
+Cette dernière méthode N'est PAS à ajouter à votre serveur. Elle sert d'exemple pour expliquer les endpoints dynamiques.
+
 ### Mise à jour
 
 La mise à jour mixera les notions vues pour la création et la récupération.
-On implémentera la méthode qui supporte les requêtes `PUT` sur l'URL `http://localhost:3000/users/<id>`, et qui prend en
-paramètre les informations de mise à jour.
+On implémentera la méthode qui supporte les requêtes `PUT` sur l'URL `http://localhost:3000/users/:id`, et qui prend en
+paramètre les informations de mise à jour, _i.e._ le nom et le prénom.
+
+Voici une commande CURL pour tester si votre backend supporte bien les requêtes PUT sur l'endpoint http://localhost/users/:id : 
+
+```sh
+$ curl -X PUT -d 'firstname=Jane' http://localhost:3000/users/0
+{"id":0,"lastname":"Doe","firstname":"Jane"}
+```
 
 ### Deletion
 
-Pour la suppression, on utilisera des requêtes de méthode `DELETE`.
+Pour la suppression, on utilisera des requêtes de méthode `DELETE` sur l'URL `http://localhost:3000/users/:id`. Ce méthode supprime l'utilisateur avec l'id passé dans l'url.
+Pour la valeur retournée, on pourrait retourner un booléen pour spécifier que la suppression s'est bien passée, ou non.
 Pour supprimer un élément d'un tableau en TypeScript, regardez du côté de 
 [Array.prototype.splice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice).
 
-Utiliser la fonction `delete users[id]` remplace la valeur par `undefined`, et ne retire pas complétement l'élément du 
-tableau.
+Il **NE** faut **PAS** utiliser la fonction `delete`, par exemple en faisant `delete users[id]`. La fonction `delete` remplace la valeur par `undefined`, et ne retire pas complétement l'élément du tableau.
+
+Voici une commande CURL pour tester si votre backend supporte bien les requêtes DELETE sur l'endpoint http://localhost/users/:id : 
+
+```sh
+$ curl -X DELETE http://localhost:3000/users/0
+```
 
 ### Traitement des erreurs
 
