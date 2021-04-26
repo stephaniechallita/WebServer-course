@@ -1,6 +1,6 @@
 # OpenAPI
 
-Dans cette partie, nous allons ajouter à notre backend une interface **swagger**, ou [OpenAPI](https://swagger.io/specification/).
+Dans cette partie, nous allons ajouter à notre backend une interface **Swagger**, ou [OpenAPI](https://swagger.io/specification/).
 
 ## Installation
 
@@ -33,7 +33,7 @@ async function bootstrap() {
 bootstrap();
 ```
 
-Une fois modifier, relancez votre backend, et connecter vous à `http://localhost:3000/api/`. Vous devriez obtenir votre 
+Une fois modifié, relancez votre backend, et connectez-vous à `http://localhost:3000/api/`. Vous devriez obtenir votre 
 interface OpenAPI.
 
 ## Configuration
@@ -68,7 +68,7 @@ public async create(@Body() input: any): Promise<User> {
 }
 ```
 
-Si on observe l'interface OpenAPI corresponds on a :
+Si on observe l'interface OpenAPI correspondante on a :
 
 ![](./pictures/open_api_post_simple.png)
 
@@ -92,8 +92,8 @@ public async create(@Body() input: UserInput): Promise<User> {
 }
 ```
 
-Vous pouvez maintenant voir dans l'interface OpenAPI, que le paramètre apparait, mais qu'il n'y a pas beaucoup 
-d'information. Il nous faut compléter cela, en ajoutant sur chaque attribut de la class `UserInput` le décorateur 
+Vous pouvez maintenant voir dans l'interface OpenAPI, que le paramètre apparaît, mais qu'il n'y a pas beaucoup 
+d'informations. Il nous faut compléter cela, en ajoutant sur chaque attribut de la class `UserInput` le décorateur 
 `@ApiProperty()`.
 
 Vous pouvez compléter les informations du décorateur afin d'enrichir votre documentation OpenAPI comme ceci :
