@@ -102,8 +102,8 @@ Ce [post StackOverFlow](https://stackoverflow.com/questions/11508463/javascript-
 ## DTO mapping
 
 Nous voulons simplifier le service web, en donnant plus de données avec une requête.
-Le but est ici de transformer les objets métiers, manipuler par le serveur en *Data Transfert Object* (DTO), des versions de ces objets mais spécialisés pour le transfert.
-Au lieu de fournir les associations comme ils sont définits en base, nous voulons en plus de ces données, ajouter les informations sur les membres : les données utilisateur et les données des rôles.
+Le but est ici de transformer les objets métiers, manipulés par le serveur, en *Data Transfert Object* (DTO), qui sont des versions de ces objets mais spécialisés pour le transfert.
+Au lieu de fournir les associations comme elles sont définies en base, nous voulons en plus de ces données, ajouter les informations sur les membres : les données utilisateur et les données des rôles.
 Pour ce faire, implémenter les classes suivantes :
 
 ![](./pictures/developpement_dto.png)
@@ -113,7 +113,7 @@ Et modifier votre backend pour que les APIs des `associations` ne renvoient plus
 
 ## Scripts de test
 
-Pour tester votre backend vous pourrez utiliser les scripts de tests suivants
+Pour tester votre backend, vous pourrez utiliser les scripts de tests suivants :
 * TBD : CRUD pour toutes les entités
 * [Logique de création des association](./scripts/developpement_association_creation_test.sh)
 * TBD : DTO
