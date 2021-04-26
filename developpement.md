@@ -26,6 +26,9 @@ d'utiliser [sqlitebrowser](https://sqlitebrowser.org/).
 
 ## Entités
 
+Le but est d'enrichir le serveur avec plus d'entités, et donc des controllers et des services. 
+On a alors 3 nouvelles entités : Role, AssociationForm et VerbalProcess.
+
 Voici le diagramme de classes de l'application :
 
 ![](pictures/developpement_diagram_classes.png)
@@ -72,6 +75,16 @@ possède le numéro unique du formulaire, il peut demander les validations aupr�
 Une fois les validations faites, l'utilisateur peut fournir la liste des membres et leurs rôles, le nom de l'association,
 le formulaire ainsi que le procès verbal de création au service `associations` (via l'API dédiée) afin de finalement créer l'association.
 
+En détail, la création d'Association fera intervenir plusieurs composants métiers du serveur et pourra être décomposée en 4 étapes :
+
+1. On crée un AssociationForm, pas besoin de paramètre.
+
+2. On doit valider les deux attributs du AssociationForm avec les LegalService et FinancialService. Le LegalService et FinancialService ne gèrent pas d'entités, mais demandent la modification d'AssociationsForms. Il faut cependant faire un controller pour chacun d'eux afin d'exposer l'endpoint validate (AssociationFormId). Cet endpoint permet de mettre à vrai les attributs legalValidation et financialValidation des AssociationsForm, par respectivement le LegalService et FinancialService.
+
+3. On crée un VerbalProcess avec les paramètres nécessaires : Users, Content et Date.
+
+4. Finalement la création de l'Association grâce aux ids (AssociationForm et VerbalProcess) que nous avons construits dans les étapes précédentes, ainsi que grâce au Name et aux Utilisateurs.
+
 La procédure est résumée dans le diagramme de séquence suivant :
 
 ![](./pictures/developpement_diagram_sequences.png)
@@ -85,10 +98,10 @@ Une fois les CRUD implémentés pour toutes les entités, nous voulons offrir à
 informations spécifiques :
 
 * La liste de tous les membres d'une association, identifiée par son nom, avec pour chaque membre son nom, son prénom, 
-  son âge et son rôle au sein de l'association ;
-* La liste de tous les rôles d'un utilisateur identifié par son `id` ;
-* La liste de tous les utilisateurs qui ont un rôle donné, identifié par son nom (le nom du rôle) ;
-* La liste de tous les procès verbaux d'une association, et pouvoir les trier en fonction de la date ou du nombre de votants.
+  son âge et son rôle au sein de l'association dans le module Associations ;
+* La liste de tous les rôles d'un utilisateur identifié par son `id` dans le module Users ;
+* La liste de tous les utilisateurs qui ont un rôle donné, identifié par son nom (le nom du rôle) dans le module Roles ;
+* La liste de tous les procès verbaux d'une association, et pouvoir les trier en fonction de la date ou du nombre de votants dans le module Associations.
 
 Pour les membres, n'hésitez pas à créer une nouvelle classe qui portera les informations que vous voulez transmettre, 
 voir plus bas.
