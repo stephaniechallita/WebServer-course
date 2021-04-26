@@ -137,7 +137,7 @@ it('should be defined', () => {
 
 Ici, la méthode `it()` prend en paramètre un string, qui explicite ce que le test vérifie, et une fonction qui est le 
 test.
-Les méthodes `expect()` et `toBeXXX()` permette de faire l'assertion, c'est-à-dire : `expect(controller).toBeDefined()` 
+Les méthodes `expect()` et `toBeXXX()` permettent de faire l'assertion, c'est-à-dire : `expect(controller).toBeDefined()` 
 veut dire "on s'attend que la variable `controller` soit définie."
 
 Voici l'implémentation du test de l'API `getAll` du contrôleur :
@@ -158,7 +158,7 @@ describe('getAll', () => {
 
 Quelques détails :
 
-1. On déclare une valeur oracle (`expected`) qui sera comparé au retour de l'API que nous testons, _i.e._ `getAll()` 
+1. On déclare une valeur oracle (`expected`) qui sera comparée au retour de l'API que nous testons, _i.e._ `getAll()` 
    (ligne 3 à 7) ;
 2. On utilise Jest pour mocker le service, c'est-à-dire que l'on crée une "fausse" implémentation de la méthode 
    `getAll()` (du service cette fois-ci !) en la faisant simplement retourner la valeur `expected` (ligne 8) ;
