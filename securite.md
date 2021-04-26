@@ -7,23 +7,23 @@ Le but de cette dernière partie est de voir quelques notions de sécurité.
 Une fonctionnalité importante d'un serveur web est de pouvoir authentifier les utilisateurs et donc de ne pas laisser 
 n'importe qui obtenir toutes les informations.
 Pour ce faire, nous allons mettre en place un système de mot de passe pour les utilisateurs, ainsi que la prise en 
-*charge d'un JWT : **JSON** **W**eb **T**oken.
+charge d'un JWT : **JSON** **W**eb **T**oken.
 Après cela, l'accès aux APIs sera restreint uniquement aux utilisateurs authentifiés, et donc avec un JWT dans le header
 de leurs requêtes.
 
-Pour cela, install tout d'abord les modules requis :
+Pour cela, installez tout d'abord les modules requis :
 
 ```sh
 npm install --save @nestjs/passport passport passport-local
 npm install --save-dev @types/passport-local
 ```
 
-Le module `passport` fournit tout le nécessaire à la mise en place de "strategy" d'authentification. Dans notre cas, 
-nous utiliserons la strategy `passport-local`, qui met en place un système d'authentification basé sur un identifiant et
+Le module `passport` fournit tout le nécessaire à la mise en place de "stratégie" d'authentification. Dans notre cas, 
+nous utiliserons la stratégie `passport-local`, qui met en place un système d'authentification basé sur un identifiant et
 un mot de passe.
 
 Une fois les modules installés, ajoutez à votre entité `user`, un nouvel attribut `password` de type string et modifiez 
-éventuellement d'autres composants, _e.g._ le `users.service`. Celui-ci sera également stocké en base. Pour le moment, 
+éventuellement d'autres composants, _e.g._ le `users.service`. Cet attribut `password` sera également stocké en base. Pour le moment, 
 on ne s'intéresse pas à sécuriser les mots de passe de la base de données.
 
 ### Module Auth
@@ -40,7 +40,7 @@ public async validateUser(id: number, password: string) : Promise<User> {
 
 ### Local Strategy
 
-Une fois implémenté, nous allons ajouter notre strategy au module `auth`. Créez le fichier `local.strategy.ts` dans le 
+Une fois implémentée, nous allons ajouter notre stratégie au module `auth`. Créez le fichier `local.strategy.ts` dans le 
 module `auth` :
 ```typescript
 @Injectable()
@@ -67,7 +67,7 @@ méthode, et si elle n'existe pas, la requête sera automatiquement rejetée.
 
 On utilisera donc l'id de l'utilisateur comme un `username`. Il suffit de le "cast" en `number` avec le symbole `+`.
 
-Mettez ensuite à jours votre `auth.module.ts` :
+Mettez ensuite à jour votre `auth.module.ts` :
 
 ```diff
 import { Module } from '@nestjs/common';
@@ -84,7 +84,7 @@ import { AuthService } from './auth.service';
 
 ### Garde
 
-Un mechanism super intéressant de NestJS est le système de Gardes (Guards). Ces gardes permettent de "protéger" les 
+Un mécanisme super intéressant de NestJS est le système de Gardes (Guards). Ces gardes permettent de "protéger" les 
 endpoints implémentés par les contrôleurs avec un predicat (une fonction booléenne). Dans le cadre de l'authentification,
 l'application des gardes est assez directe : on refuse l'accès aux utilisateurs non authentifiés ou avec des informations 
 (le couple (username;password)) erronées.
@@ -108,18 +108,18 @@ export class AuthController {
 
 Ici, on a plusieurs nouvelles fonctionnalités : 
 
-1. Le décorateur `@UseGuards()` qui permet de spécifier une liste de garde qui "protégera" l'endpoint gérer pas la 
+1. Le décorateur `@UseGuards()` qui permet de spécifier une liste de garde qui "protègera" l'endpoint géré par la 
    méthode. Les gardes peuvent être également spécifiés au niveau du contrôleur, afin que tous les endpoints du 
-   contrôleur soit protégés par la même Garde (et ça évite de mettre des `UseGuards()` à toutes les fonctions) ;
+   contrôleur soient protégés par la même Garde (et ça évite de mettre des `UseGuards()` à toutes les fonctions) ;
 2. Le décorateur `AuthGuard('local')` qui est une garde spéciale d'authentification, qui utilisera la stratégie 'local',
    qui a été implémentée juste avant.
 3. Le décorateur / paramètre `@Request() request` qui modélise et porte toutes les informations de la requête que le 
-   client à fait.
+   client a fait.
 
 Vous pouvez constater que le corps de cette méthode est pratiquement vide. En fait, cette méthode délègue toute la 
-logique d'authentification à sa garde, et on évite alors de la redondance de code.
+logique d'authentification à sa garde, et on évite alors la redondance de code.
 
-Faites le nécessaire d'un point de vue base de données, et tester la nouvelle API avec les commandes suivantes :
+Faites le nécessaire d'un point de vue base de données, et testez la nouvelle API avec les commandes suivantes :
 
 ```shell
 # expected 200 with info of user with ID = 1
@@ -128,7 +128,7 @@ curl -X POST http://localhost:3000/auth/login -d '{"username": "1", "password": 
 curl -X POST http://localhost:3000/auth/login -d '{"username": "1", "password": "wrong_password"}' -H "Content-Type: application/json"
 ```
 
-Bien évidement, faites attention aux valeurs de ces requêtes : la première a un password valid, et l'utilisateur sera 
+Bien évidemment, faites attention aux valeurs de ces requêtes : la première a un password valide, et l'utilisateur sera 
 validé, tandis que la deuxième non.
 
 ### JWT
@@ -171,7 +171,7 @@ export const jwtConstants = {
 };
 ```
 
-Cette constante est le "sel" du jeton et doit rester secrète.
+Cette constante est le "sel" du jeton et doit resté secret.
 
 Nous allons maintenant ajouter le module `Jwt` dans `app.module.ts` :
 
@@ -195,7 +195,7 @@ export class AuthModule { }
 ```
 
 Ici, on importe le `JwtModule`, et on le configure avec l'appel à la méthode `register()` en donnant un objet configuration en paramètre.
-La configuration est : le secret à utiliser est la constante définit à l'étape précèdente ; les `JWT` expirent au bout d'une minute.
+La configuration est : le secret à utiliser est la constante définie à l'étape précèdente ; les `JWT` expirent au bout d'une minute.
 
 Et on va maintenant mettre à jour la méthode `login()` du `auth.controller.ts` :
 
@@ -249,7 +249,7 @@ Et ajoutez cette nouvelle stratégie à votre module `auth.module.ts`:
 + providers: [AuthService, LocalStrategy, JwtStrategy],
 ```
 
-### Protéger des APIs le token
+### Protéger des APIs avec le token
 
 C'est beau d'avoir un token mais il faut maintenant protéger les apis avec. De la même manière que pour la stratégie locale, _i.e._ le couple `username;password`, on peut mettre en place une garde qui s'attend à voir un token valide dans le header de la requête.
 Ajoutez simplement sur un contrôleur ou sur une API specifique : 
@@ -258,17 +258,17 @@ Ajoutez simplement sur un contrôleur ou sur une API specifique :
 @UseGuards(AuthGuard('jwt'))
 ```
 
-Et tada ! Passport s'occupe de tout gérer pour vous. Testez une de vos apis protéger avec la lignes de commande suivante : 
+Et tada ! Passport s'occupe de tout gérer pour vous. Testez une de vos apis protégée avec la ligne de commande suivante : 
 
 ```sh
 curl -X GET http://localhost:3000/users -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6MSwiaWF0IjoxNjE3NzM5MzkxLCJleHAiOjE2MTc3Mzk0NTF9.p8uuEpr16YOhoCPjwWNLLQyeKDCxvbixwDa0q60whYI"
 ```
 
-En changeant bien évidement la valeur du token après `Bearer` (ceci demande à ce que vous ajoutiez la garde sur l'api `GET /users/`)
+En changeant bien évidememnt la valeur du token après `Bearer` (ceci demande à ce que vous ajoutiez la garde sur l'api `GET /users/`)
 
 ## Fonction de Hash pour le mot de passe
 
-Nous allons maintenant hasher le mot de passe des utilisateurs avant de le stocker en base. Premièrement, installer les modules suivants :
+Nous allons maintenant hasher le mot de passe des utilisateurs avant de le stocker en base. Premièrement, installez les modules suivants :
 
 ```shell
 npm i bcrypt
@@ -285,7 +285,7 @@ const saltOrRounds = 10;
 const hash = await bcrypt.hash(password, saltOrRounds);
 ```
 
-Ce code est à utiliser lors de la création et l'enregistrement d'un utilisateur. Pour comparer un mot de passe fournit par un utilisateur et celui stocké en base, le module `bcrypt` fournit la méthode asyncrhone `compare` :
+Ce code est à utiliser lors de la création et l'enregistrement d'un utilisateur. Pour comparer un mot de passe fourni par un utilisateur et celui stocké en base, le module `bcrypt` fournit la méthode asyncrhone `compare` :
 
 ```typescript
 bcrypt.compare(password, hash);
@@ -295,7 +295,7 @@ Mettez à jour votre code pour gérer le code hashé.
 
 ## Helmet
 
-Helmet est une collection d'intergiciel qui ajoute des "Headers HTTP" pour protéger les applications web de failles bien connues.
+Helmet est une collection d'intergiciels qui ajoute des "Headers HTTP" pour protéger les applications web de failles bien connues.
 Bien simple d'utilisation, il en reste néamoins puissant et très utile.
 
 Pour installer `helmet`, utilisez la ligne de commande suivante :
@@ -304,7 +304,7 @@ Pour installer `helmet`, utilisez la ligne de commande suivante :
 npm i --save helmet
 ```
 
-Ensuite, il suffit de modifier son `main.ts`, ou le fichier où l'application est bootstrapper avec :
+Ensuite, il suffit de modifier son `main.ts`, ou le fichier où l'application est bootstrappée avec :
 
 
 ```diff
@@ -338,10 +338,10 @@ En ajoutant l'option `-v` à une commande curl, vous pourrez observer que `helme
 < Keep-Alive: timeout=5
 ```
 
-Sans `helmet`, vos réponses fuiteront le fait que votre application a été fait avec [ExpressJS](https://expressjs.com/), un framework nodejs sur lequel est bati `NestJS` pour construire des applications web. Dans le retour d'une commande `curl` sans `helmet`, vous devriez trouver quelques chose comme : 
+Sans `helmet`, vos réponses fuiteront le fait que votre application a été faite avec [ExpressJS](https://expressjs.com/), un framework nodejs sur lequel est bati `NestJS` pour construire des applications web. Dans le retour d'une commande `curl` sans `helmet`, vous devriez trouver quelques chose comme : 
 
 ```
 X-Powered-By: Express
 ```
 
-Qu'est-ce qu'on peut faire avec ça ? C'est une bonne question et c'est en dehors de la portée du projet. Cependant, ce [blog](https://www.codementor.io/@dealwap/few-ways-i-could-hijack-your-node-js-applications-h07fvj731) explique comment exploiter cette connaissance pour s'approprier des droits (par exemple d'adminstration dans votre application) ou modifier des ressources qui ne sont pas accessibles normalement (Je rappel ici, que ce blog est à but éducatif, et vous ne devez en aucun cas reproduire ou tenter ces attaques sur de véritables applications, sous peine de sanction pénale. L'UR1 décline toutes réponsabilités).
+Qu'est-ce qu'on peut faire avec ça ? C'est une bonne question et c'est en dehors de la portée du projet. Cependant, ce [blog](https://www.codementor.io/@dealwap/few-ways-i-could-hijack-your-node-js-applications-h07fvj731) explique comment exploiter cette connaissance pour s'approprier des droits (par exemple d'adminstration dans votre application) ou modifier des ressources qui ne sont pas accessibles normalement (Je rappelle ici, que ce blog est à but éducatif, et vous ne devez en aucun cas reproduire ou tenter ces attaques sur de véritables applications, sous peine de sanction pénale. L'UR1 décline toute réponsabilité).
