@@ -43,6 +43,8 @@ public async validateUser(id: number, password: string) : Promise<User> {
 Une fois implémentée, nous allons ajouter notre stratégie au module `auth`. Créez le fichier `local.strategy.ts` dans le 
 module `auth` :
 ```typescript
+import { Strategy } from "passport-local"; 
+
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
 
@@ -63,7 +65,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 ```
 
 Il est impératif de garder la signature de la méthode `validate` car le module `passport` va chercher après une telle 
-méthode, et si elle n'existe pas, la requête sera automatiquement rejetée.
+méthode, et si elle n'existe pas, la requête sera automatiquement rejetée. Faites attention à bien importer `Strategy` de `passport-local`. 
 
 On utilisera donc l'id de l'utilisateur comme un `username`. Il suffit de le "cast" en `number` avec le symbole `+`.
 
@@ -122,10 +124,10 @@ logique d'authentification à sa garde, et on évite alors la redondance de code
 Faites le nécessaire d'un point de vue base de données, et testez la nouvelle API avec les commandes suivantes :
 
 ```shell
-# expected 200 with info of user with ID = 1
-curl -X POST http://localhost:3000/auth/login -d '{"username": "1", "password": "valid_password"}' -H "Content-Type: application/json"
+# expected 201 with info of user with ID = 1
+curl -X POST http://localhost:3000/auth/login -d 'username=1&password=valid_password' -H "Content-Type: application/json" -v
 # expecting 401 Unauthorized
-curl -X POST http://localhost:3000/auth/login -d '{"username": "1", "password": "wrong_password"}' -H "Content-Type: application/json"
+curl -X POST http://localhost:3000/auth/login -d 'username=1&password=wrong_password' -H "Content-Type: application/json" -v
 ```
 
 Bien évidemment, faites attention aux valeurs de ces requêtes : la première a un password valide, et l'utilisateur sera 
