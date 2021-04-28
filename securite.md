@@ -110,7 +110,7 @@ export class AuthController {
 
 Ici, on a plusieurs nouvelles fonctionnalités : 
 
-1. Le décorateur `@UseGuards()` qui permet de spécifier une liste de garde qui "protègera" l'endpoint géré par la 
+1. Le décorateur `@UseGuards()` qui permet de spécifier une liste de gardes qui "protègera" l'endpoint géré par la 
    méthode. Les gardes peuvent être également spécifiés au niveau du contrôleur, afin que tous les endpoints du 
    contrôleur soient protégés par la même Garde (et ça évite de mettre des `UseGuards()` à toutes les fonctions) ;
 2. Le décorateur `AuthGuard('local')` qui est une garde spéciale d'authentification, qui utilisera la stratégie 'local',
