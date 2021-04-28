@@ -160,7 +160,7 @@ async login(user: any) {
 }
 ```
 
-ainsi que l'import et l'injection du `JwtService` depuis le module `@nestjs/jwt`.
+ainsi que l'import et l'injection du `JwtService` depuis le module `@nestjs/jwt` dans le constructeur du AuthService.
 
 Ici, on utilise la méthode `sign()` du `jwtService` pour générer un jeton à partir de certaines informations de 
 l'utilisateur.
@@ -206,7 +206,7 @@ Et on va maintenant mettre à jour la méthode `login()` du `auth.controller.ts`
   @Post('login')
   async login(@Request() request) {
 -    return request.user;
-+    return this.authService.login(req.user);
++    return this.authService.login(request.user);
   }
 ```
 
@@ -214,7 +214,7 @@ Vous pouvez maintenant tester que le backend crée bien un token en réutilisant
 Vous devriez avoir en retour le token.
 
 ```sh
-$ curl -X POST http://localhost:3000/auth/login -d '{"username": "1", "password": "valid_password"}' -H "Content-Type: application/json"
+$ curl -X POST http://localhost:3000/auth/login -d 'username=1&password=valid_password' -H "Content-Type: application/json"
 {"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6MSwiaWF0IjoxNjE3NzM2NTQ4LCJleHAiOjE2MTc3MzY2MDh9.3GRHwA_Tpk_dJFddBooUZCf-2Al4EoajWziYjcMOS7E"}
 ```
 
