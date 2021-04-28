@@ -162,7 +162,7 @@ async login(user: any) {
 
 ainsi que l'import et l'injection du `JwtService` depuis le module `@nestjs/jwt`.
 
-Ici, on utilise la méthode `sign()` du `jwtService` pour générer un jeton à partir de certaine information de 
+Ici, on utilise la méthode `sign()` du `jwtService` pour générer un jeton à partir de certaines informations de 
 l'utilisateur.
 
 Créez maintenant un nouveau fichier `auth/constants.ts` qui contiendra le code suivant :
@@ -173,9 +173,9 @@ export const jwtConstants = {
 };
 ```
 
-Cette constante est le "sel" du jeton et doit resté secret.
+Cette constante est le "sel" du jeton et doit restée secrète.
 
-Nous allons maintenant ajouter le module `Jwt` dans `app.module.ts` :
+Nous allons maintenant ajouter le module `Jwt` dans `auth.module.ts` :
 
 ```diff
 +import { JwtModule } from '@nestjs/jwt';
