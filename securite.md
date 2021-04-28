@@ -125,9 +125,9 @@ Faites le nécessaire d'un point de vue base de données, et testez la nouvelle 
 
 ```shell
 # expected 201 with info of user with ID = 1
-curl -X POST http://localhost:3000/auth/login -d 'username=1&password=valid_password' -H "Content-Type: application/json" -v
+curl -X POST http://localhost:3000/auth/login -d 'username=1&password=valid_password' -v
 # expecting 401 Unauthorized
-curl -X POST http://localhost:3000/auth/login -d 'username=1&password=wrong_password' -H "Content-Type: application/json" -v
+curl -X POST http://localhost:3000/auth/login -d 'username=1&password=wrong_password' -v
 ```
 
 Bien évidemment, faites attention aux valeurs de ces requêtes : la première a un password valide, et l'utilisateur sera 
@@ -214,7 +214,7 @@ Vous pouvez maintenant tester que le backend crée bien un token en réutilisant
 Vous devriez avoir en retour le token.
 
 ```sh
-$ curl -X POST http://localhost:3000/auth/login -d 'username=1&password=valid_password' -H "Content-Type: application/json"
+$ curl -X POST http://localhost:3000/auth/login -d 'username=1&password=valid_password'
 {"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6MSwiaWF0IjoxNjE3NzM2NTQ4LCJleHAiOjE2MTc3MzY2MDh9.3GRHwA_Tpk_dJFddBooUZCf-2Al4EoajWziYjcMOS7E"}
 ```
 
