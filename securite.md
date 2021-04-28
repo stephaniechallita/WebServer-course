@@ -220,7 +220,7 @@ $ curl -X POST http://localhost:3000/auth/login -d 'username=1&password=valid_pa
 
 ### JWT Strategy
 
-De même manière que pour la stratégie locale, nous allons implémenter une stratégie `jwt`. Créez un nouveau fichier `jwt.strategy.ts` avec le code suivant : 
+De la même manière que pour la stratégie locale, nous allons implémenter une stratégie `jwt`. Créez un nouveau fichier `jwt.strategy.ts` avec le code suivant : 
 
 ```typescript
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -266,7 +266,7 @@ Et tada ! Passport s'occupe de tout gérer pour vous. Testez une de vos apis pro
 curl -X GET http://localhost:3000/users -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6MSwiaWF0IjoxNjE3NzM5MzkxLCJleHAiOjE2MTc3Mzk0NTF9.p8uuEpr16YOhoCPjwWNLLQyeKDCxvbixwDa0q60whYI"
 ```
 
-En changeant bien évidememnt la valeur du token après `Bearer` (ceci demande à ce que vous ajoutiez la garde sur l'api `GET /users/`)
+En changeant bien évidemment la valeur du token après `Bearer` (ceci demande à ce que vous ajoutiez la garde sur l'api `GET /users/`)
 
 ## Fonction de Hash pour le mot de passe
 
