@@ -25,7 +25,7 @@ vont s'appeler entre eux, quand il y a besoin.
 
 Le `users.controller` utilise uniquement le `service.services`. Dans le cas où le traitement demandé 
 par le client (par sa requête) nécessite l'intervention d'un autre `service`, _e.g._ le `associations.service`, c'est 
-le `users.service` qui va appeler le `associations.service`, et non pas le `users.controller`, même si la requête est gérer par le `users.controller`.
+le `users.service` qui va appeler le `associations.service`, et non pas le `users.controller`, même si la requête est gérée par le `users.controller`.
 
 ## Plan
 
