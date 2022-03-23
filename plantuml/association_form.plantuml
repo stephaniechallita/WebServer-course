@@ -1,0 +1,7 @@
+@startuml association_form
+left to right direction
+class AssociationForm {
+    financialValidation: boolean
+    legalValidation: boolean
+}
+@enduml

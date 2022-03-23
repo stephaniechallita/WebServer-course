@@ -70,6 +70,14 @@ export class AppModule {}
 Ici, on spécifie le type de base de données ainsi que le fichier utilisé. Vérifier que lorsque vous lancez votre backend,
 il n'y a pas d'erreur : `npm run start`.
 
+### Erreur possible
+
+Si vous obtenez le message suivant:
+```txt
+TypeError: (0 , rxjs_1.lastValueFrom) is not a function
+```
+quand vous lancez votre backend (`npm run start`), faites la commande `npm i rxjs@^7` puis retestez !
+
 ## Entités
 
 Nous allons maintenant faire de nos entités, _i.e._ `user.entity.ts` et `association.entity.ts` de réels entités d'un point
@@ -79,16 +87,17 @@ Pour ce faire, vous devez utiliser les décorateurs correctement. Référez-vous
 décorateurs brièvement ou à la [documentation officielle](https://docs.nestjs.com/techniques/database) de NestJS 
 (attention la documentation de NestJS utilise mysql comme base de données).
 
+Vous devez donc :
+1. Ajouter le décorator de classe `@Entity()` sur vos classes `User` et `Association`.
+2. Ajouter un décorator à chacun des champs de la classe Association afin de spécifier son mapping vers la base de données.
+
 Pensez-bien à quels décorateurs vous allez utiliser. Vous ne devriez pas modifier les définitions des classes, sauf pour
-`association.entity`:
+`association.entity`, où on ne stockera plus les id des utilisateurs mais les utilisateurs directements :
 
 ```diff
 - public idUsers: number[];
 + public users: User[];
 ```
-
-Mettez à jour le AssociationsService, en conséquence. Pour la création d'Association, nous partirons du principe que tous les Users (donc membres de l'Association) existent **avant** la création de l'Association. De ce fait, les données d'entrée pour la création d'Association restent les mêmes que pour le [TP3](https://github.com/stephaniechallita/WebServer/blob/master/modules_et_logiques_metiers.md) : `idUsers: number[] ,name: string`.
-À partir des `idUsers`, l'AssociationsService doit demander au UsersService de lui fournir les Users correspondant afin de créer la nouvelle Association.
 
 Pour chaque nouvelle entité déclarée, via le décorateur `@Entity()`, vous devez enregistrer cette nouvelle entité auprès de TypeORM dans le AppModule :
 
@@ -113,35 +122,17 @@ export class AppModule {}
 
 Il s'agit ici de dire explicitement à TypeORM quelles sont les entités de notre serveur. Il pourra alors gérer beaucoup de choses pour nous, comme par exemple les `Repository`, la couche que nous verrons juste après et qui s'occupe de la communication avec la base de données.
 
-### Configuration de la récupération des données associées
+Une fois vos classes `Association` et `User` "transformées" en entité, nous devons maintenant mettre à jour les `users.service` et `associations.service` en conséquence.
 
-Pour la gestion de la récupération des données associées, lazy loading ou tout charger, vous pouvez utiliser le paramètre `{eager: true}` dans les décorateurs d'associations (`@ManyToMany()` par exemple) pour signaler à TypeOrm que vous souhaitez charger toutes les données en une seule fois (quand la valeur est true). 
-Pour mettre en place le lazy loading, vous devez utiliser `false` (ou ne pas utiliser `eager`par défaut), et utiliser une Promesse comme type pour votre attribut. Pour récupérer la valeur, vous devrez alors utiliser soit un `await` soit une construction `.then()`.
+Pour la création d'Association, nous partirons du principe que tous les Users (donc membres de l'Association) existent **avant** la création de l'Association. De ce fait, les données d'entrée pour la création d'Association restent les mêmes que pour le [TP3](https://github.com/stephaniechallita/WebServer/blob/master/modules_et_logiques_metiers.md) : `idUsers: number[], name: string`.
+À partir des `idUsers`, `associations.service` doit demander au `users.service` de lui fournir les Users correspondant afin de créer la nouvelle Association.
 
-Par exemple, pour le `@ManyToMany` entre Association et User, on aura :
-
-Pour le lazy loading, `association.entity.ts`:
-```typescript
-/* ... */
-  @ManytoMany(type => User)
-  @JoinTable()
-  users: Promise<User[]>
-/* ... */
-```
-Pour tout charger à chaque requête, `association.entity.ts`:
-```typescript
-/* ... */
-  @ManytoMany(type => User, { eager: true })
-  @JoinTable()
-  users: User[]
-/* ... */
-```
-
-Cette configuration n'affecte pas les associations (au sens relationnel) sous-jacentes, e.g. si j'ai un eager sur les users d'une association, ça ne veut pas dire que j'ai eager sur une association d'une autre entité aux users. Chaque association doit/peut être configurée.
+Dans la suite du TP, vous trouverez des indications de modifications afin de vous aider à bien mettre à jour les services.
 
 ## Injection du Repository
 
-Maintenant, nous allons injecter le `repository` dans nos services. Pour ce faire, modifiez le `users.service.ts`:
+Pour les prochaines modifications, nous devons injecter les `repositories` dans les services correspondant. 
+Par exemple, pour `users.service.ts`, on aura :
 
 ```diff
 -const users: User[] = [
@@ -162,8 +153,8 @@ export class UsersService {
 +) {}
 ```
 
-Ici, on supprime la "base de données", _i.e._ le tableau que l'on utilisait, et on injecte un Repository, qui devient un 
-attribut de notre classe `UserService`.
+Ici, on supprime la "base de données", _i.e._ le tableau codé en dur que l'on utilisait, et on injecte un Repository, qui devient un 
+attribut de notre classe `UserService`. Le Repository va faire l'interface avec la base de données (dans notre cas, le fichier `mydatabase.db` crée plus haut et géré par SQLite)
 
 Vous devrez aussi ajouter dans le `user.module.ts` l'import suivant :
 
@@ -176,14 +167,16 @@ Vous devrez aussi ajouter dans le `user.module.ts` l'import suivant :
 })
 ```
 
-Mettez à jour `users.service.ts` et faites de même pour `associations.service.ts` et `associations.module.ts` pour que 
-ceux-ci n'utilisent plus de tableau mais la classe `Repository` de TypeORM.
+Mettez à jour `users.service.ts` et faites de même pour `associations.service.ts` et `associations.module.ts` pour que ceux-ci n'utilisent plus de tableau mais la classe `Repository` de TypeORM. La section suivante décrit l'API des `Repository` afin de vous aidez à apporter les modifications
+requises.
+
+D'un point de vue facilité, attaquez-vous au module `users`, dont les modifications sont plus simples que pour le module `association`.
 
 ### API de Repository
 
 Concernant la manipulation du `Repository`, toutes les méthodes des repository sont asynchrones. Pour une question de 
 facilité, on utilisera le mot-clés `await` devant chaque appel de méthode pour attendre son résultat. Cela nécessitera 
-de déclarer vos méthodes de service asynchrone aussi (avec le mot-clé `async` ainsi que de modifier son retour en Promesse,
+de déclarer vos méthodes de `services` **ET** de `controller` asynchrones aussi (avec le mot-clé `async` ainsi que de modifier son retour en Promesse,
 _e.g._ `Promise<User>`).
 
 Par exemple pour `getById`, on aura :
@@ -218,16 +211,60 @@ méthode `save()`.
   recherches. Par exemple, le `FindOperator` le plus demandé serait celui qui permet de trouver une entité avec un 
   certain id. Celui-ci s'écrit comme qui suit :
 ```typescript=
-this.repository.find({id: Equal(idToFind)});
+this.repository.findOne({id: Equal(idToFind)});
 ```
+
 Le `FindOperator` a une forme de JSON, où la clé est la colonne sur laquelle on cherche à mettre la condition, et la 
 valeur est le prédicat. Ici, on cherche l'`id` qui est égal `Equal()` à l'`idToFind`. Pour plus d'informations sur les 
 `FindOperator`, voir la [documentation officielle](https://typeorm.io/#/find-options).
 
+Pour la mise à jour (`update`), il vous sera peut-être plus simple et plus lisible de récupérer la bonne `entity` à partir de l'id (`getById(id)`),
+mettre à jour les champs de l'entité récupérée, puis d'appeler `this.repository.save(entity);` pour mettre à jour.
+
+### Configuration de la récupération des données associées
+
+Pour la gestion de la récupération des données associées, lazy loading ou tout charger, vous pouvez utiliser le paramètre `{eager: true}` dans les décorateurs d'associations (`@ManyToMany()` par exemple) pour signaler à TypeOrm que vous souhaitez charger toutes les données en une seule fois (quand la valeur est true). 
+Pour mettre en place le lazy loading, vous devez utiliser `false` (ou ne pas utiliser `eager`par défaut), et utiliser une Promesse comme type pour votre attribut. Pour récupérer la valeur, vous devrez alors utiliser soit un `await` soit une construction `.then()`.
+
+Par exemple, pour le `@ManyToMany` entre Association et User, on aura :
+
+Pour le lazy loading, `association.entity.ts`:
+```typescript
+/* ... */
+  @ManytoMany(type => User)
+  @JoinTable()
+  users: Promise<User[]>
+/* ... */
+```
+Pour tout charger à chaque requête, `association.entity.ts`:
+```typescript
+/* ... */
+  @ManytoMany(type => User, { eager: true })
+  @JoinTable()
+  users: User[]
+/* ... */
+```
+
+Cette configuration n'affecte pas les associations (au sens relationnel) sous-jacentes, _e.g._ si j'ai un eager sur les users d'une association, ça ne veut pas dire que j'ai eager sur une association d'une autre entité aux users. Chaque association doit/peut être configurée.
+
+### Possible erreur
+
+Lors de la modification, vous aurez peut-être l'erreur suivante : 
+
+```txt
+Unable to connect to the database. Retrying (1)... +11ms
+TypeORMError: Entity metadata for User#association was not found.
+```
+
+Si c'est le cas, supprimez le fichier de base de données `mydatabase.db` et créez en un nouveau en suivant à nouveau la procédure ci-dessus.
+
 ## Tests
 
 Maintenant qu'on a une base de données, il sera plus contraignant de manipuler les données, et notamment gérer l'état 
-pendant le développement. Premièrement, assurez-vous que votre fichier de base de données est vide (supprimez-le et 
-recrééez-le si besoin). Deuxièmement, créez une copie de votre base de données, nommez-la `mydatabase.db.old`. Ce 
-fichier nous servira de backup. Utilisez le [script suivant](./scripts/typeorm_resporistory_et_donnees_test.sh) pour 
-(ré-)initialiser la base de données.
+pendant le développement. 
+Premièrement, assurez-vous que votre fichier de base de données est vide (supprimez-le et 
+recrééez-le si besoin). 
+Deuxièmement, créez une copie de votre base de données, nommez-la `mydatabase.db.old`. 
+Dans la suite, les scripts de tests utiliserons le fichier `mydatabase.db.old` pour "hard reset" la base de données (et repartir d'une base vide)
+On peut donc dire que le fichier `mydatabase.db.old` nous servira de backup.
+Utilisez le [script suivant](./scripts/typeorm_repository_et_donnees_test.sh) pour (ré-)initialiser la base de données et tester votre backend.

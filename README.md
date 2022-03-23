@@ -49,10 +49,10 @@ complétez l'étape 6, 7 et 8, je vous tire mon chapeau.
 2. [Contrôleurs et première API](./controleurs_et_premiere_api.md)
 3. [Modules et logique métier](./modules_et_logiques_metiers.md)
 4. [TypeORM, Repository et données](typeorm_repository_et_donnees.md)
-5. [Développement](./developpement.md)
-6. [OpenAPI](./openapi.md)
-7. [Tester son backend NestJS](./tester_son_backend_nestjs.md)
-8. [Sécurité](./securite.md)
+5. [OpenAPI](./openapi.md)
+6. [Tester son backend NestJS](./tester_son_backend_nestjs.md)
+7. [Sécurité](./securite.md)
+8. [Développement](./developpement.md)
 
 ## Modalités d'évaluation
 
@@ -66,5 +66,4 @@ le 30/04/21 à minuit (CET). La soutenance aura lieu le **03 mai** lors de votre
 Voici les critères d'évaluation utilisés :
 
 - Soutenance de présentation du projet et de la compréhension des notions.
-- Points Bonus si étapes 6, 7, 8.
 - Appréciation de la gestion du dépôt git : nombre de commits, message de commits, régularité des commits, etc.

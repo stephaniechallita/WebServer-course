@@ -1,0 +1,13 @@
+@startuml association_dto
+left to right direction
+class Member {
+    name: string
+    firstname: string
+    age: number
+    role: string
+}
+class AssociationDTO {
+    name: string
+}
+Member "*" *-- "1" AssociationDTO : members
+@enduml
