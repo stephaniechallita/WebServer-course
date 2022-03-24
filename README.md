@@ -42,8 +42,8 @@ Les détails de conception ainsi que les procédures seront décrites au fur et 
 
 ## Étapes du projet
 
-Afin de vous guider, le projet a été divisé en étapes. Vous devez absolument arriver au moins à l'étape 5. Si vous 
-complétez l'étape 6, 7 et 8, je vous tire mon chapeau.
+Afin de vous guider, le projet a été divisé en étapes. Vous devez absolument arriver au moins à l'étape 7. Si vous 
+complétez l'étape 8, je vous tire mon chapeau.
 
 1. [Premiers pas avec NestJS](./premiers_pas_avec_nestjs.md)
 2. [Contrôleurs et première API](./controleurs_et_premiere_api.md)
@@ -61,7 +61,8 @@ sous la forme d’un projet **privé** sur le [GitLab de l’ISTIC](https://gitl
 aurez mis votre code source ainsi qu’un rapport détaillant vos choix de mapping ORM et d'API. Un fichier README 
 à la racine du projet GitLab devra en décrire le contenu et l’organisation.
 Vous devrez inviter vos évaluateurs au projet GitLab et lui envoyer l’adresse du projet par mail au plus tard
-le 30/04/21 à minuit (CET). La soutenance aura lieu le **03 mai** lors de votre dernière séance de travaux pratiques.
+le 27/04/21 à minuit (CET). La soutenance aura lieu le **29 avril** pour le groupe 1 et le **28 avril** pour le groupe 2
+lors de votre dernière séance de travaux pratiques.
 
 Voici les critères d'évaluation utilisés :
 
