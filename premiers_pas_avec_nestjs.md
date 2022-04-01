@@ -14,7 +14,7 @@ Avec cette commande, vous avez à disposition un ensemble de commandes qui perme
 Une alternative est de suivre la procédure suivante :
 
 ```sh
-git clone https://github.com/nestjs/typescript-starter.git 
+git clone https://github.com/nestjs/typescript-starter.git fr-administration
 cd fr-administration
 npm install
 ```
