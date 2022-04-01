@@ -10,7 +10,7 @@ request() {
         echo "curl -X ${method} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}"
         http_status=`curl -X ${method} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}`
     else
-        echo "curl -X ${method} -d ${parameters} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}"
+        echo "curl -X ${method} -d '${parameters}' -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}"
         http_status=`curl -X ${method} -d ${parameters} -o /dev/null -s -w "%{http_code}\n" --header 'Accept: application/json' ${url}`
     fi
     if [ ${http_status} != ${expected_http_status} ]
@@ -36,11 +36,18 @@ delete() {
     request DELETE ${1} ${2} ${3}
 }
 
-get http://localhost:3000/users 200
-get http://localhost:3000/users/0 200
-get http://localhost:3000/users/1 404
-post http://localhost:3000/users 201 "firstname=Jane&lastname=Doe"
-get http://localhost:3000/users/1 200
-put http://localhost:3000/users/1 200 "firstname=Janette&lastname=Doe"
-delete http://localhost:3000/users/1 200
-get http://localhost:3000/users/1 404
+post http://localhost:3000/users 201 "firstname=John&lastname=Doe&age=23"
+post http://localhost:3000/users 201 "firstname=Janette&lastname=Doe&age=32"
+post http://localhost:3000/associations 201 "idUsers[]=1&idUsers[]=2&name=Assoc1"
+
+post http://localhost:3000/roles 201 "name=member&idUser=1&idAssociation=1"
+post http://localhost:3000/roles 201 "name=president&idUser=2&idAssociation=1"
+
+get http://localhost:3000/roles/1/1 200
+get http://localhost:3000/roles/2/1 200
+get http://localhost:3000/roles/2/2 404
+
+put http://localhost:3000/roles/1/1 200 "name=treasurer"
+
+delete http://localhost:3000/roles/1/1 200
+get http://localhost:3000/roles/1/1 404

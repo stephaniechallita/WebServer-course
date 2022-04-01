@@ -1,0 +1,16 @@
+@startuml roles_classes
+left to right direction
+class Role {
+    role: string
+}
+class User {
+    name: string
+    firstname: string
+    age: number
+}
+class Association {
+    name: string
+}
+User "*" -- "*" Association
+(User, Association) .. Role
+@enduml

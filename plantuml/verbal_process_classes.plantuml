@@ -1,0 +1,17 @@
+@startuml diagram_classes
+left to right direction
+class User {
+    name: string
+    firstname: string
+    age: number
+}
+class Association {
+    name: string
+}
+class VerbalProcess {
+    date: string
+    content: string
+}
+VerbalProcess "*" -- "1" Association
+VerbalProcess "voters" --o User
+@enduml

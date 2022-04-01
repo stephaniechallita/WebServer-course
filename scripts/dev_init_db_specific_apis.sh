@@ -29,7 +29,7 @@ post() {
 }
 
 put() {
-    request PUT ${1} ${2} "${3}"
+    request PUT ${1} ${2} ${3}
 }
 
 delete() {
@@ -39,10 +39,14 @@ delete() {
 post http://localhost:3000/users 201 "firstname=John&lastname=Doe&age=23"
 post http://localhost:3000/users 201 "firstname=Janette&lastname=Doe&age=32"
 
-post http://localhost:3000/association-forms 201
-put http://localhost:3000/legal-service/validate 200 "associationFormId=1"
-put http://localhost:3000/financial-service/validate 200 "associationFormId=1"
-post http://localhost:3000/verbal-processes 201 "idVoters[]=1&idVoters[]=2&content=ContentOfVerbalProcess&date=01/01/2021"
-post http://localhost:3000/associations 201 "name=Assoc1&idUsers[]=1&idUsers[]=2&roles[]=Treasurer&roles[]=President&associationFormId=1&verbalProcessId=1"
+post http://localhost:3000/associations 201 "idUsers[]=1&idUsers[]=2&name=Assoc1"
+post http://localhost:3000/associations 201 "idUsers[]=1&idUsers[]=2&name=Assoc2"
 
-get http://localhost:3000/associations/Assoc1 200
+post http://localhost:3000/roles 201 "name=member&idUser=1&idAssociation=1"
+post http://localhost:3000/roles 201 "name=president&idUser=2&idAssociation=1"
+post http://localhost:3000/roles 201 "name=treasurer&idUser=1&idAssociation=2"
+post http://localhost:3000/roles 201 "name=member&idUser=2&idAssociation=2"
+
+post http://localhost:3000/minutes 201 "content=blablabla&idVoters[]=1&idVoters[]=2&date=12/12/2021&idAssociation=1"
+post http://localhost:3000/minutes 201 "content=blablabla&idVoters[]=2&date=25/12/2021&idAssociation=1"
+post http://localhost:3000/minutes 201 "content=blablabla&idVoters[]=1&date=30/12/2021&idAssociation=1"

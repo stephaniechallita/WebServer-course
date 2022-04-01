@@ -38,6 +38,9 @@ public async validateUser(id: number, password: string) : Promise<User> {
 }
 ```
 
+qui vérifie que le mot de passe (`password`) fournit en paramètre est bien le mot de passe de l'`user` désigné par son `id` passé en paramètre.
+Si tel est le cas, alors la fonction retourne l'utilisateur, `undefined` si non.
+
 ### Local Strategy
 
 Une fois implémentée, nous allons ajouter notre stratégie au module `auth`. Créez le fichier `local.strategy.ts` dans le 
@@ -65,7 +68,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 ```
 
 Il est impératif de garder la signature de la méthode `validate` car le module `passport` va chercher après une telle 
-méthode, et si elle n'existe pas, la requête sera automatiquement rejetée. Faites attention à bien importer `Strategy` de `passport-local`. 
+méthode, et si elle n'existe pas, la requête sera automatiquement rejetée. Faites attention à bien importer `Strategy` de `passport-local` (et non pas d'un autre package). 
 
 On utilisera donc l'id de l'utilisateur comme un `username`. Il suffit de le "cast" en `number` avec le symbole `+`.
 
@@ -80,6 +83,7 @@ import { AuthService } from './auth.service';
 
 @Module({
 +  imports: [UsersModule, PassportModule],
+-  providers: [AuthService]
 +  providers: [AuthService, LocalStrategy]
 })
 ```
@@ -197,7 +201,7 @@ export class AuthModule { }
 ```
 
 Ici, on importe le `JwtModule`, et on le configure avec l'appel à la méthode `register()` en donnant un objet configuration en paramètre.
-La configuration est : le secret à utiliser est la constante définie à l'étape précèdente ; les `JWT` expirent au bout d'une minute.
+La configuration est : le secret à utiliser, qui est la constante définie à l'étape précèdente ; les `JWT` expirent au bout d'une minute.
 
 Et on va maintenant mettre à jour la méthode `login()` du `auth.controller.ts` :
 
@@ -287,13 +291,20 @@ const saltOrRounds = 10;
 const hash = await bcrypt.hash(password, saltOrRounds);
 ```
 
-Ce code est à utiliser lors de la création et l'enregistrement d'un utilisateur. Pour comparer un mot de passe fourni par un utilisateur et celui stocké en base, le module `bcrypt` fournit la méthode asyncrhone `compare` :
+Ce code est à utiliser lors de la création et l'enregistrement d'un utilisateur. 
+
+Pour comparer un mot de passe fourni par un utilisateur et celui stocké en base, le module `bcrypt` fournit la méthode asynchrone `compare` :
 
 ```typescript
 bcrypt.compare(password, hash);
 ```
 
+On stockera en base le hash du mot de passe et non pas le mot de passe lui-même, dans le cas d'une fuite de votre base de données, vous protégez ainsi vos clients !
+
 Mettez à jour votre code pour gérer le code hashé.
+
+Si vous avez tout bien fait, le comportement n'a pas changé. Cependant, si vous affichez (attention à ne jamais le faire en dehors de ce tp) les mots de passe, vous 
+obtiendrais un charabia (le hash du mot de passe en fait).
 
 ## Helmet
 
@@ -310,7 +321,7 @@ Ensuite, il suffit de modifier son `main.ts`, ou le fichier où l'application es
 
 
 ```diff
-+ import * as helmet from 'helmet';
++ import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

@@ -87,30 +87,64 @@ et modifier l'input de notre API :
 ```diff
 @Post()
 -public async create(@Body() input: any): Promise<User> {
++public async create(@Body() input: UserInput): Promise<User> {
+    return this.service.create(input.firstname, input.lastname, input.age);
+}
+```
+
+Vous pouvez maintenant voir dans l'interface OpenAPI, que le paramètre apparaît.
+
+Aussi, on peut ajouter des décorateurs pour spécifier les codes de retour et les messages en concéquences. Par exemple :
+
+```typescript
+@ApiCreatedResponse({
+    description: 'The user has been successfully created.'
+})
 public async create(@Body() input: UserInput): Promise<User> {
     return this.service.create(input.firstname, input.lastname, input.age);
 }
 ```
 
-Vous pouvez maintenant voir dans l'interface OpenAPI, que le paramètre apparaît, mais qu'il n'y a pas beaucoup 
-d'informations. Il nous faut compléter cela, en ajoutant sur chaque attribut de la class `UserInput` le décorateur 
+Il n'y a pas beaucoup d'informations concernant `UserInput`. Il nous faut compléter cela, en ajoutant sur chaque attribut de la class `UserInput` le décorateur 
 `@ApiProperty()`.
 
 Vous pouvez compléter les informations du décorateur afin d'enrichir votre documentation OpenAPI comme ceci :
 
 ```typescript
-@ApiProperty({
-    description: 'The age of the user',
-    minimum: 18,
-    default: 18,
-})
+import { ApiProperty } from "@nestjs/swagger";
+
+export class UserInput {
+
+    @ApiProperty({
+        description: 'The firtname of the user',
+        example: "John",
+        type: String,
+    })
+    public firstname: string;
+
+    @ApiProperty({
+        description: 'The lastname of the user',
+        example: "Doe",
+        type: String,
+        
+    })
+    public lastname: string;
+
+    @ApiProperty({
+        description: 'The age of the user',
+        minimum: 18,
+        default: 18,
+        type: Number,
+    })
+    public age: number;
+}
 ```
 
-Cela apportera, dans l'ongle schéma, de nouvelles informations sur l'utilisation de cette API :
+Cela apportera, dans l'onglet schéma, de nouvelles informations sur l'utilisation de cette API :
 
 ![](./pictures/open_api_post_details.png)
 
-Cela permet également de fournir des données exemples quand à l'utilisation de l'API.
+Cela permet également de fournir des données exemples quand à l'utilisation de l'API, vous pourrez alors lancer des requêtes avec ces données pour tester votre backend depuis l'interface OpenAPI!
 
 Vous pouvez dès à présent créer des objets de données d'entrée pour toutes vos APIs, ainsi que les documenter.
 

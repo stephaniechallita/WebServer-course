@@ -31,12 +31,18 @@ décorateurs, mais cette fois-ci sur les méthodes de la class `UsersController`
 
 Ajoutez la méthode suivante à `UsersController` :
 
-```typescript
-import { ..., Get, ... } from '@nestjs/common';
-...
-@Get()
-getAll(): string[] {
-    return ['a', 'b', 'c'];
+```diff
+-import { Controller } from '@nestjs/common';
++import { Controller, Get } from '@nestjs/common';
+
+@Controller('users')
+export class UsersController {
+
++    @Get()
++    getAll(): string[] {
++        return ['a', 'b', 'c'];
++    }
+
 }
 ```
 
@@ -147,14 +153,16 @@ create(@Body() input: any): User {
     ...
 }
 ```
-À vous de compléter le corps de la méthode.
+À vous de compléter le corps de la méthode. Cette méthode doit :
+* créer une nouvelle instance de `User` (la syntaxe "à la Java" fonctionne : `new User(param1, param2)`)
+* ajouter cette nouvelle instance à notre "base de données", qui est le tableau de `User`, _i.e._ `const users : User[]`, les tableaux en typescript peuvent être vu comme des `List` en Java, et la fonction `push` permet d'ajouter un élément (_.e.g_ `users.push(newUser)`)
+* retourner cette nouvelle instance au client
 
 `any` est de "n'importe quel" type, et peut-être manipulé comme du `JSON`.
 
 Si `input = { id: '0', lastname: 'Doe', firstname: 'John' }` alors `input.id` permet d'accéder à la valeur `id` du JSON.
 
 Pour la création, c'est le backend qui gère les ids.
-
 
 Voici une commande CURL qui peut vous servir à tester votre implémentation :
 
@@ -216,7 +224,11 @@ nous permet de récupérer cette valeur en faisant `parameter.id`.
 À vous d'implémenter le corps de la méthode, qui doit retourner l'utilisateur qui a pour `id`, l'id passé en paramètre.
 
 Regarder de ce [côté](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) pour 
-trouver une api qui facilitera l'implémentation.
+trouver une api qui facilitera l'implémentation, en particulier la fonction `filter()`.
+
+Vous allez peut-être devoir "caster" vos variables et vos paramètres pour les comparés. 
+En typescript, il suffit d'écrire le symbole `+` devant une variable pour la caster en entier, utilisé l'opérateur `===` pour comparer les valeurs.
+Ici, il s'agit de retrouver l'élément du tableau `users` qui a son champ `id` égal à celui passer en paramètre, _i.e._ `parameter.id`.
 
 Voici une commande CURL pour tester si votre backend supporte bien l'endpoint http://localhost/users/:id : 
 
@@ -225,7 +237,7 @@ $ curl http://localhost:3000/users/0
 {"id":0,"lastname":"Doe","firstname":"John"}
 ```
 
-Vous noterez l'absence des brackets [] qui signifie qu'il s'agit d'un élément du tableau.
+Vous noterez l'absence des brackets [] qui signifie qu'il s'agit d'un seul élément et non pas d'un tableau.
 
 #### Digression sur les endpoints dynamiques
 
@@ -253,8 +265,13 @@ Cette dernière méthode N'est PAS à ajouter à votre serveur. Elle sert d'exem
 La mise à jour mixera les notions vues pour la création et la récupération.
 On implémentera la méthode qui supporte les requêtes `PUT` sur l'URL `http://localhost:3000/users/:id`, et qui prend en
 paramètre les informations de mise à jour, _i.e._ le nom et le prénom.
+Vous aurez donc besoin à la fois d'un `@Param() parameter` pour récupérer l'id de l'endpoint dynamique et le `@Body() input` pour
+récupérer les nouvelles valeurs du nom et du prénom.
 
-Voici une commande CURL pour tester si votre backend supporte bien les requêtes PUT sur l'endpoint http://localhost/users/:id : 
+Vous ne mettrez à jours les champs de l'élements `user`, _i.e._ `firstname` et `lastname`, que si ceux-ci sont passé en paramètre.
+Pour cela, vérifie avant la mise à jour, que la valeur n'est pas égale à `undefined`, _e.g._ `input.firstname !== undefined`.
+
+Voici une commande CURL pour tester si votre backend supporte bien les requêtes PUT sur l'endpoint http://localhost/users/:id :
 
 ```sh
 $ curl -X PUT -d 'firstname=Jane' http://localhost:3000/users/0
