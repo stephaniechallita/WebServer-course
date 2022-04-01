@@ -11,6 +11,36 @@ npm i -g @nestjs/cli
 Il se peut que vous devez avoir les droits d'administration.
 Avec cette commande, vous avez à disposition un ensemble de commandes qui permet de générer du code pour votre backend `NestJS`
 
+Une alternative est de suivre la procédure suivante :
+
+```sh
+git clone https://github.com/nestjs/typescript-starter.git 
+cd fr-administration
+npm install
+```
+
+Puis, au lieu de lancer la commande `nest`, utilisez `node node_modules/@nestjs/cli/bin/nest.js`.
+
+Par exemple: 
+
+```
+nest g s services
+```
+
+est équivalent à :
+
+```
+node node_modules/@nestjs/cli/bin/nest.js g s services
+```
+
+Pour augmenter votre confort, ajouter à votre `.bashrc` dans votre `HOME` la ligne:
+
+```sh
+alias nest='node /<absolute_path/>node_modules/@nestjs/cli/bin/nest.js'
+```
+
+En remplaçant `/<absolute_path/>node_modules/@nestjs/cli/bin/nest.js` par le path correct (la commande `pwd` peut vous aider).
+
 ## Création de projet
 
 Pour générer un squelette de projet `NestJS`, il suffit d'utiliser la ligne de commande suivante :
