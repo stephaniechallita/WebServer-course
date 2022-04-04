@@ -1,6 +1,6 @@
 # Premiers pas avec NestJS
 
-## Installation
+## Installation et Création de projet
 
 Pour installer `NestJS`, vous pouvez utiliser la ligne de commande suivante : 
 
@@ -11,8 +11,6 @@ npm i -g @nestjs/cli
 Il se peut que vous devez avoir les droits d'administration.
 Avec cette commande, vous avez à disposition un ensemble de commandes qui permet de générer du code pour votre backend `NestJS`
 
-## Création de projet
-
 Pour générer un squelette de projet `NestJS`, il suffit d'utiliser la ligne de commande suivante :
 
 ```shell
@@ -20,6 +18,48 @@ nest new fr-administration
 ```
 
 Choisissez `npm` comme `package manager`.
+
+Pour les machines de l'ISTIC/ESIR, une alternative est de suivre la procédure suivante :
+
+```sh
+git clone https://github.com/nestjs/typescript-starter.git fr-administration
+cd fr-administration
+npm install
+```
+
+Puis, au lieu de lancer la commande `nest`, utilisez `node node_modules/@nestjs/cli/bin/nest.js`.
+
+Par exemple: 
+
+```
+nest g s services
+```
+
+est équivalent à :
+
+```
+node node_modules/@nestjs/cli/bin/nest.js g s services
+```
+
+Pour améliorer votre confort, ajoutez à votre `.bashrc` dans votre `HOME` la ligne:
+
+```sh
+alias nest='node /<absolute_path/>node_modules/@nestjs/cli/bin/nest.js'
+```
+
+En remplaçant `/<absolute_path/>node_modules/@nestjs/cli/bin/nest.js` par le path correct (la commande `pwd` peut vous aider).
+
+Vous n'avez pas besoin de lancer la commande `nest new fr-administration`.
+
+#### Explications:
+
+La commande `npm i -g @nestjs/cli` ajoute l'interface de ligne de commandes (**cli**: Command Line Interface) `nest` à votre terminal.
+Lorsque vous clonez le projet `nestjs/typescript-starter.git`, celui-ci a la dépendance à la **cli** `nest` et donc lorsque vous lancez `npm install`, vous téléchargez la **cli** pour votre projet.
+
+De ce fait, vous obtenez la **cli** `nest` "localement" à votre projet, c'est pour cela qu'on utilise : `node node_modules/@nestjs/cli/bin/nest.js`.
+
+Finalement, en utilisant un alias, vous obtenez une commande `nest` tout comme vous l'aurez obtenu avec 
+`npm i -g @nestjs/cli`, modulo le fait que si vous supprimez votre projet, et donc ses dépendances, vous n'aurez plus la **cli** `nest`.
 
 ## Lancement et test
 
