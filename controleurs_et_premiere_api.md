@@ -155,10 +155,10 @@ create(@Body() input: any): User {
 ```
 À vous de compléter le corps de la méthode. Cette méthode doit :
 * créer une nouvelle instance de `User` (la syntaxe "à la Java" fonctionne : `new User(param1, param2)`)
-* ajouter cette nouvelle instance à notre "base de données", qui est le tableau de `User`, _i.e._ `const users : User[]`, les tableaux en typescript peuvent être vu comme des `List` en Java, et la fonction `push` permet d'ajouter un élément (_.e.g_ `users.push(newUser)`)
+* ajouter cette nouvelle instance à notre "base de données", qui est le tableau de `User`, _i.e._ `const users : User[]`, les tableaux en typescript peuvent être vus comme des `List` en Java, et la fonction `push` permet d'ajouter un élément (_.e.g_ `users.push(newUser)`)
 * retourner cette nouvelle instance au client
 
-`any` est de "n'importe quel" type, et peut-être manipulé comme du `JSON`.
+`any` est de "n'importe quel" type, et est manipulé comme du `JSON`.
 
 Si `input = { id: '0', lastname: 'Doe', firstname: 'John' }` alors `input.id` permet d'accéder à la valeur `id` du JSON.
 
