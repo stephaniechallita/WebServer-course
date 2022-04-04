@@ -171,7 +171,7 @@ $ curl -X POST -d 'firstname=Jane&lastname=Doe' http://localhost:3000/users/
 {"id":1,"firstname":"Jane","lastname":"Doe"}
 ```
 
-Faites attention, si vous modifier l'état de votre tableau `users`, il se peut que les résultats des requêtes soient differents.
+Faites attention, si vous modifiez l'état de votre tableau `users`, il se peut que les résultats des requêtes soient differents.
 Dans le doute, relancer manuellement votre backend, et votre tableau `users` sera de nouveau initialisé uniquement avec l'élement par défaut, _i.e._
 
 ```typescript
@@ -191,7 +191,7 @@ Pour la récupération des données, on souhaite supporter **au moins** deux ces
 Par exemple, si je souhaite récupérer l'élement par défaut de mon tableau `users`, je ferais :
 GET http://localhost/users/0, et le retour devrait être `{id: 0, lastname: Doe, firstname: John}`.
 
-Le premier endpoint est plutôt immédiat. Inspirez-vous des endpoints qui ont été faite à la section au-dessus "Premier endpoint".
+Le premier endpoint est plutôt immédiat. Inspirez-vous des endpoints qui ont été faites à la section au-dessus "Premier endpoint".
 
 Voici une commande CURL pour tester si votre backend supporte bien l'endpoint http://localhost/users : 
 
@@ -200,10 +200,10 @@ $ curl http://localhost:3000/users
 [{"id":0,"lastname":"Doe","firstname":"John"}]
 ```
 
-Vous noterez la précense des brackets [] qui signifie qu'il s'agit d'un tableau.
+Vous noterez la présence des brackets [] qui signifie qu'il s'agit d'un tableau.
 
 
-Le second endpoint pourrait être qualifié de "dynamique", c'est-à-dire qu'il s'agit ici d'un modèle d'endpoint, où on a dans l'endpoint un paramètre l'`id`.
+Le second endpoint pourrait être qualifié de "dynamique", c'est-à-dire qu'il s'agit ici d'un modèle d'endpoint, où on a dans l'endpoint un paramètre : l'`id`.
 
 Pour ce faire, on utilise un string spécial dans le décorateur `Get()` ainsi qu'un paramètre, avec le décorateur `@Param()`.
 
@@ -226,7 +226,7 @@ nous permet de récupérer cette valeur en faisant `parameter.id`.
 Regarder de ce [côté](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) pour 
 trouver une api qui facilitera l'implémentation, en particulier la fonction `filter()`.
 
-Vous allez peut-être devoir "caster" vos variables et vos paramètres pour les comparés. 
+Vous allez peut-être devoir "caster" vos variables et vos paramètres pour les comparer.
 En typescript, il suffit d'écrire le symbole `+` devant une variable pour la caster en entier, utilisé l'opérateur `===` pour comparer les valeurs.
 Ici, il s'agit de retrouver l'élément du tableau `users` qui a son champ `id` égal à celui passer en paramètre, _i.e._ `parameter.id`.
 
@@ -241,7 +241,7 @@ Vous noterez l'absence des brackets [] qui signifie qu'il s'agit d'un seul élé
 
 #### Digression sur les endpoints dynamiques
 
-On peut utiliser ce genre de paramètre autant que l'on souhaite. Par exemple, je peux supporter l'url suivante : `users/0/api/John/` grâce au décorateur suivante : `@Get(':id/api/:lastname)` (en rappelant que le `users` vient de l'endpoint général du contrôleur). Pour récupérer les valeurs, on utilise toujours le paramètre décoré avec `@Param()`. 
+On peut utiliser ce genre de paramètre autant que l'on souhaite. Par exemple, je peux supporter l'url suivante : `users/0/api/John/` grâce au décorateur suivant : `@Get(':id/api/:lastname)` (en rappelant que le `users` vient de l'endpoint général du contrôleur). Pour récupérer les valeurs, on utilise toujours le paramètre décoré avec `@Param()`. 
 Pour conlure, voici un exemple complet : 
 
 ```typescript
@@ -268,8 +268,8 @@ paramètre les informations de mise à jour, _i.e._ le nom et le prénom.
 Vous aurez donc besoin à la fois d'un `@Param() parameter` pour récupérer l'id de l'endpoint dynamique et le `@Body() input` pour
 récupérer les nouvelles valeurs du nom et du prénom.
 
-Vous ne mettrez à jours les champs de l'élements `user`, _i.e._ `firstname` et `lastname`, que si ceux-ci sont passé en paramètre.
-Pour cela, vérifie avant la mise à jour, que la valeur n'est pas égale à `undefined`, _e.g._ `input.firstname !== undefined`.
+Vous ne mettrez à jour les champs de l'élement `user`, _i.e._ `firstname` et `lastname`, que si ceux-ci sont passés en paramètre.
+Pour cela, vérifiez avant la mise à jour, que la valeur n'est pas égale à `undefined`, _e.g._ `input.firstname !== undefined`.
 
 Voici une commande CURL pour tester si votre backend supporte bien les requêtes PUT sur l'endpoint http://localhost/users/:id :
 
@@ -280,7 +280,7 @@ $ curl -X PUT -d 'firstname=Jane' http://localhost:3000/users/0
 
 ### Deletion
 
-Pour la suppression, on utilisera des requêtes de méthode `DELETE` sur l'URL `http://localhost:3000/users/:id`. Ce méthode supprime l'utilisateur avec l'id passé dans l'url.
+Pour la suppression, on utilisera des requêtes de méthode `DELETE` sur l'URL `http://localhost:3000/users/:id`. Cette méthode supprime l'utilisateur avec l'id passé dans l'url.
 Pour la valeur retournée, on pourrait retourner un booléen pour spécifier que la suppression s'est bien passée, ou non.
 Pour supprimer un élément d'un tableau en TypeScript, regardez du côté de 
 [Array.prototype.splice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice).
