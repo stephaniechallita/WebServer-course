@@ -41,7 +41,7 @@ est équivalent à :
 node node_modules/@nestjs/cli/bin/nest.js g s services
 ```
 
-Pour améliorer votre confort, ajouter à votre `.bashrc` dans votre `HOME` la ligne:
+Pour améliorer votre confort, ajoutez à votre `.bashrc` dans votre `HOME` la ligne:
 
 ```sh
 alias nest='node /<absolute_path/>node_modules/@nestjs/cli/bin/nest.js'
@@ -54,7 +54,7 @@ Vous n'avez pas besoin de lancer la commande `nest new fr-administration`.
 #### Explications:
 
 La commande `npm i -g @nestjs/cli` ajoute l'interface de ligne de commandes (**cli**: Command Line Interface) `nest` à votre terminal.
-Lorsque vous clonez le projet `nestjs/typescript-starter.git` celui-ci à la dépendence à la **cli** `nest` et donc lorsque vous lancez `npm install`, vous téléchargez la **cli** pour votre projet.
+Lorsque vous clonez le projet `nestjs/typescript-starter.git`, celui-ci a la dépendance à la **cli** `nest` et donc lorsque vous lancez `npm install`, vous téléchargez la **cli** pour votre projet.
 
 De ce fait, vous obtenez la **cli** `nest` "localement" à votre projet, c'est pour cela qu'on utilise : `node node_modules/@nestjs/cli/bin/nest.js`.
 
