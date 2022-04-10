@@ -23,7 +23,7 @@ renvoyer aux clients.
 Pour que les modules travaillent ensemble, on passe par la couche `services`, c'est-à-dire que c'est les services qui 
 vont s'appeler entre eux, quand il y a besoin.
 
-Le `users.controller` utilise uniquement le `users.services`. Dans le cas où le traitement demandé 
+Le `users.controller` utilise uniquement le `users.service`. Dans le cas où le traitement demandé 
 par le client (par sa requête) nécessite l'intervention d'un autre `service`, _e.g._ le `associations.service`, c'est 
 le `users.service` qui va appeler le `associations.service`, et non pas le `users.controller`, même si la requête est gérée par le `users.controller`.
 
@@ -33,7 +33,7 @@ Dans cette partie du projet nous allons effectuer les étapes suivantes :
 
 1. Générer un service utilisateur;
 2. Déplacer la "base de données" (le tableau `users`) du contrôleur vers le service car c'est le service qui gère la logique;
-3. Déplacer toutes la logique: création, récupération, mise à jour et suppression du contrôleur vers le service;
+3. Déplacer toute la logique: création, récupération, mise à jour et suppression du contrôleur vers le service;
 4. Mettre à jour le contrôleur pour qu'il appelle les bonnes méthodes du service.
 Pour résumer les deux derniers points, on veut avoir :
 `users.controller.ts`:
@@ -60,7 +60,7 @@ et dans le `users.service.ts`:
 * Un modèle d'association;
 * Un contrôleur qui gérera toutes les requêtes CRUD, et délèguera la logique au service des associations;
 * Un service qui implémentera la logique;
-6. Finalement, nous verrons comment faire travailler ensemble les services `users` et `associations`, afin de fournir une nouvelle API permettant de calculer l'âge moyen des membres (utilisateurs) d'une associations. Cette requête sera traitée par le contrôleur associations, qui délèguera la logique de calcul au service associations. Le service associations aura alors besoin du service users pour ce calcul.
+6. Finalement, nous verrons comment faire travailler ensemble les services `users` et `associations`, afin de fournir une nouvelle API permettant de récupérer tous les membres d'une association à partir de l'id de l'association. Cette requête sera traitée par le contrôleur associations, qui délèguera la logique au service associations. Le service associations aura alors besoin du service users.
 
 ## Génération d'un service `users`
 
@@ -114,7 +114,7 @@ Basiquement, pour chaque opération CRUD, nous allons implémenter une fonction 
 Le `controller` va appeler le `service` pour réaliser les traitements en fonction des requêtes des clients.
 Pour cela, il a besoin d'une instance de service.
 
-C'est là que le décorateur `@Injectable()` prend tout son sens : on peut simplement déclarer un nouvel attribut dans le constructeur du `controller`, et `NestJS` s'occupe de tout, c'est-à-dire que `NestJS` instanciera lui-même le service, et l'injectera au moment de la création du contrôleur. Voici ce à quoi resemble le constructeur du  `controller` des utilisateurs :
+C'est là que le décorateur `@Injectable()` prend tout son sens : on peut simplement déclarer un nouvel attribut dans le constructeur du `controller`, et `NestJS` s'occupe de tout, c'est-à-dire que `NestJS` instanciera lui-même le service, et l'injectera au moment de la création du contrôleur. Voici ce à quoi ressemble le constructeur du  `controller` des utilisateurs :
 
 ```typescript
 import { UsersService } from './users.service';
@@ -128,7 +128,7 @@ constructor(
 
 Dans le `controller`, vous pouvez faire appel aux méthodes du `service` avec `this.service.myMethod(myParameter);`.
 
-Attention, il est recommendé de : 
+Attention, il est recommandé de : 
 1. traiter les données d'entrées dans le `controller`. C'est-à-dire que la function `create` du `users.service` ressemblera à ça:
 ```typescript
 create(lastname: string, firstname: string, age: number): User
@@ -145,7 +145,7 @@ plutôt que
 ```typescript
 return this.service.create(input);
 ```
-2. la gestion du renvoie des erreurs HTTP devrait être également gérée par le `controller`.
+2. la gestion du renvoi des erreurs HTTP devrait être également gérée par le `controller`.
 
 ## Module, Controlleur et Service Association
 
@@ -195,7 +195,7 @@ et importer le module `users` dans le module `association` :
 `associations.module.ts` :
 ```diff
     providers: [AssociationsService],
-+   imports: [UsersService]
++   imports: [UsersModule]
 ```
 
 Une fois l'injection faite, implémentez la méthode suivante dans le `associations.service`, qui renvoie toutes les informations
