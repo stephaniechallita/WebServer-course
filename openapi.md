@@ -38,10 +38,10 @@ interface OpenAPI.
 
 ## Configuration
 
-### Regroupement d'API par tags
+### Regroupement d'APIs par tags
 
-Dans la version par défaut, toutes vos apis devraient être regroupées sous le tag `defaut`. Pour configurer ces tags, 
-il suffit d'ajouter aux contrôleurs le décorateur ` @ApiTags('<tag>')`. Par exemple, pour le contrôleur des utilisateurs :
+Dans la version par défaut, toutes vos APIs devraient être regroupées sous le tag `default`. Pour configurer ces tags, 
+il suffit d'ajouter aux `controllers` le décorateur ` @ApiTags('<tag>')`. Par exemple, pour le contrôleur des utilisateurs :
 
 ```typescript
 /** omis **/
@@ -94,7 +94,7 @@ et modifier l'input de notre API :
 
 Vous pouvez maintenant voir dans l'interface OpenAPI, que le paramètre apparaît.
 
-Aussi, on peut ajouter des décorateurs pour spécifier les codes de retour et les messages en concéquences. Par exemple :
+Aussi, on peut ajouter des décorateurs pour spécifier les codes de retour et les messages en conséquence. Par exemple :
 
 ```typescript
 @ApiCreatedResponse({
@@ -126,7 +126,6 @@ export class UserInput {
         description: 'The lastname of the user',
         example: "Doe",
         type: String,
-        
     })
     public lastname: string;
 
@@ -144,7 +143,7 @@ Cela apportera, dans l'onglet schéma, de nouvelles informations sur l'utilisati
 
 ![](./pictures/open_api_post_details.png)
 
-Cela permet également de fournir des données exemples quand à l'utilisation de l'API, vous pourrez alors lancer des requêtes avec ces données pour tester votre backend depuis l'interface OpenAPI!
+Cela permet également de fournir des données exemples quand à l'utilisation de l'API, vous pourrez alors lancer des requêtes avec ces données pour tester votre backend depuis l'interface OpenAPI grâce au bouton `Try it out`!
 
 Vous pouvez dès à présent créer des objets de données d'entrée pour toutes vos APIs, ainsi que les documenter.
 
