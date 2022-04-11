@@ -8,11 +8,11 @@ C'est pour cela, dans cette partie, nous allons mettre en place la base de donn�
 
 Pour la base de données, nous utiliserons [SQLite](https://www.sqlite.org/index.html) qui permet de gérer une base de 
 données relationnelle "sans serveur", c'est-à-dire que la base de données sera un simple fichier. Cela permet d'avoir 
-une base de donnée rapidement, légère et portable. Étant donné que nous n'avons pas de grand besoin pour notre 
+une base de données rapidement, légère et portable. Étant donné que nous n'avons pas de grand besoin pour notre 
 application, SQLite remplira parfaitement son rôle.
 
 Cependant, SQLite n'est pas le choix par défaut pour une application de production. Voici un petit comparatif des 
-differentes bases de données relationnelles [ici](https://www.digitalocean.com/community/tutorials/sqlite-vs-mysql-vs-postgresql-a-comparison-of-relational-database-management-systems) (EN).
+différentes bases de données relationnelles [ici](https://www.digitalocean.com/community/tutorials/sqlite-vs-mysql-vs-postgresql-a-comparison-of-relational-database-management-systems) (EN).
 
 ## Préparatifs
 
@@ -28,7 +28,7 @@ suivante dans votre terminal :
 sudo apt-get install sqlite3 libsqlite3-dev
 ```
 
-Puis lancer la commande :
+Puis lancez la commande :
 ```shell
 sqlite3 mydatabase.db
 ```
@@ -49,7 +49,7 @@ Pour installer TypeORM, tapez la commande suivante à la racine de votre projet 
 npm install --save @nestjs/typeorm typeorm sqlite3
 ```
 
-Puis importer dans votre `app.module.ts` le module `TypeORMModule` de la façon suivante :
+Puis importez dans votre `app.module.ts` le module `TypeORMModule` de la façon suivante :
 
 ```diff
 @Module({
@@ -67,7 +67,7 @@ Puis importer dans votre `app.module.ts` le module `TypeORMModule` de la façon 
 export class AppModule {}
 ```
 
-Ici, on spécifie le type de base de données ainsi que le fichier utilisé. Vérifier que lorsque vous lancez votre backend,
+Ici, on spécifie le type de base de données ainsi que le fichier utilisé. Vérifiez que lorsque vous lancez votre backend,
 il n'y a pas d'erreur : `npm run start`.
 
 ### Erreur possible
@@ -80,7 +80,7 @@ quand vous lancez votre backend (`npm run start`), faites la commande `npm i rxj
 
 ## Entités
 
-Nous allons maintenant faire de nos entités, _i.e._ `user.entity.ts` et `association.entity.ts` de réels entités d'un point
+Nous allons maintenant faire de nos entités, _i.e._ `user.entity.ts` et `association.entity.ts` de réelles entités d'un point
 de vue TypeORM, c'est-à-dire, des objets à sauvegarder en base.
 
 Pour ce faire, vous devez utiliser les décorateurs correctement. Référez-vous au cours dans lequel nous avons vu ces 
@@ -89,7 +89,7 @@ décorateurs brièvement ou à la [documentation officielle](https://docs.nestjs
 
 Vous devez donc :
 1. Ajouter le décorator de classe `@Entity()` sur vos classes `User` et `Association`.
-2. Ajouter un décorator à chacun des champs de la classe Association afin de spécifier son mapping vers la base de données.
+2. Ajouter un décorator à chacun des champs des classes `User` et `Association` afin de spécifier leur mapping vers la base de données.
 
 Pensez-bien à quels décorateurs vous allez utiliser. Vous ne devriez pas modifier les définitions des classes, sauf pour
 `association.entity`, où on ne stockera plus les id des utilisateurs mais les utilisateurs directements :
@@ -122,7 +122,7 @@ export class AppModule {}
 
 Il s'agit ici de dire explicitement à TypeORM quelles sont les entités de notre serveur. Il pourra alors gérer beaucoup de choses pour nous, comme par exemple les `Repository`, la couche que nous verrons juste après et qui s'occupe de la communication avec la base de données.
 
-Une fois vos classes `Association` et `User` "transformées" en entité, nous devons maintenant mettre à jour les `users.service` et `associations.service` en conséquence.
+Une fois vos classes `Association` et `User` "transformées" en entités, nous devons maintenant mettre à jour les `users.service` et `associations.service` en conséquence.
 
 Pour la création d'Association, nous partirons du principe que tous les Users (donc membres de l'Association) existent **avant** la création de l'Association. De ce fait, les données d'entrée pour la création d'Association restent les mêmes que pour le [TP3](https://github.com/stephaniechallita/WebServer/blob/master/modules_et_logiques_metiers.md) : `idUsers: number[], name: string`.
 À partir des `idUsers`, `associations.service` doit demander au `users.service` de lui fournir les Users correspondant afin de créer la nouvelle Association.
@@ -131,10 +131,15 @@ Dans la suite du TP, vous trouverez des indications de modifications afin de vou
 
 ## Injection du Repository
 
-Pour les prochaines modifications, nous devons injecter les `repositories` dans les services correspondant. 
+Pour les prochaines modifications, nous devons injecter les `repositories` dans les services correspondants. 
 Par exemple, pour `users.service.ts`, on aura :
 
 ```diff
+...
++import { InjectRepository } from '@nestjs/typeorm';
++import { Repository } from 'typeorm';
+...
+
 -const users: User[] = [
 -    {
 -        id: 0,
@@ -153,10 +158,10 @@ export class UsersService {
 +) {}
 ```
 
-Ici, on supprime la "base de données", _i.e._ le tableau codé en dur que l'on utilisait, et on injecte un Repository, qui devient un 
-attribut de notre classe `UserService`. Le Repository va faire l'interface avec la base de données (dans notre cas, le fichier `mydatabase.db` crée plus haut et géré par SQLite)
+Ici, on supprime la "base de données", _i.e._ le tableau codé en dur que l'on utilisait, et on injecte un `Repository`, qui devient un 
+attribut de notre classe `UsersService`. Le `Repository` va faire l'interface avec la base de données (dans notre cas, le fichier `mydatabase.db` créé plus haut et géré par SQLite)
 
-Vous devrez aussi ajouter dans le `user.module.ts` l'import suivant :
+Vous devrez aussi ajouter dans le `users.module.ts` l'import suivant :
 
 ```diff
 @Module({
@@ -170,13 +175,13 @@ Vous devrez aussi ajouter dans le `user.module.ts` l'import suivant :
 Mettez à jour `users.service.ts` et faites de même pour `associations.service.ts` et `associations.module.ts` pour que ceux-ci n'utilisent plus de tableau mais la classe `Repository` de TypeORM. La section suivante décrit l'API des `Repository` afin de vous aidez à apporter les modifications
 requises.
 
-D'un point de vue facilité, attaquez-vous au module `users`, dont les modifications sont plus simples que pour le module `association`.
+D'un point de vue facilité, attaquez-vous en premier au module `users`, dont les modifications sont plus simples que pour le module `associations`.
 
 ### API de Repository
 
-Concernant la manipulation du `Repository`, toutes les méthodes des repository sont asynchrones. Pour une question de 
+Concernant la manipulation du `Repository`, toutes les méthodes des repositories sont asynchrones. Pour une question de 
 facilité, on utilisera le mot-clés `await` devant chaque appel de méthode pour attendre son résultat. Cela nécessitera 
-de déclarer vos méthodes de `services` **ET** de `controller` asynchrones aussi (avec le mot-clé `async` ainsi que de modifier son retour en Promesse,
+de déclarer vos méthodes de `services` **ET** de `controllers` asynchrones aussi (avec le mot-clé `async` ainsi que de modifier son retour en Promesse,
 _e.g._ `Promise<User>`).
 
 Par exemple pour `getById`, on aura :
