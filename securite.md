@@ -1,6 +1,6 @@
 # Sécurité
 
-Le but de cette dernière partie est de voir quelques notions de sécurité.
+Le but de cette partie est de voir quelques notions de sécurité.
 
 ## Authentification
 
@@ -24,7 +24,7 @@ un mot de passe.
 
 Une fois les modules installés, ajoutez à votre entité `user`, un nouvel attribut `password` de type string et modifiez 
 éventuellement d'autres composants, _e.g._ le `users.service`. Cet attribut `password` sera également stocké en base. Pour le moment, 
-on ne s'intéresse pas à sécuriser les mots de passe de la base de données.
+on ne s'intéresse pas à sécuriser les mots de passe de la base de données, on verra plus tard dans le tp comment hasher les mots de passe avant de les stocker.
 
 ### Module Auth
 
@@ -38,7 +38,7 @@ public async validateUser(id: number, password: string) : Promise<User> {
 }
 ```
 
-qui vérifie que le mot de passe (`password`) fournit en paramètre est bien le mot de passe de l'`user` désigné par son `id` passé en paramètre.
+qui vérifie que le mot de passe (`password`) fourni en paramètre est bien le mot de passe de l'`user` désigné par son `id` passé en paramètre.
 Si tel est le cas, alors la fonction retourne l'utilisateur, `undefined` si non.
 
 ### Local Strategy
@@ -117,7 +117,7 @@ Ici, on a plusieurs nouvelles fonctionnalités :
 1. Le décorateur `@UseGuards()` qui permet de spécifier une liste de gardes qui "protègera" l'endpoint géré par la 
    méthode. Les gardes peuvent être également spécifiés au niveau du contrôleur, afin que tous les endpoints du 
    contrôleur soient protégés par la même Garde (et ça évite de mettre des `UseGuards()` à toutes les fonctions) ;
-2. Le décorateur `AuthGuard('local')` qui est une garde spéciale d'authentification, qui utilisera la stratégie 'local',
+2. Le type `AuthGuard('local')` qui est une garde spéciale d'authentification, qui utilisera la stratégie 'local',
    qui a été implémentée juste avant.
 3. Le décorateur / paramètre `@Request() request` qui modélise et porte toutes les informations de la requête que le 
    client a fait.
@@ -139,7 +139,7 @@ validé, tandis que la deuxième non.
 
 ### JWT
 
-C'est bien bon l'authentification, mais comme nous avons un serveur REST, il est stateless et donc il faut fournir à 
+C'est bien beau l'authentification, mais comme nous avons un serveur REST, il est stateless et donc il faut fournir à 
 chaque requête les informations d'authentification, ce qui peut être lourd. C'est pour cela que nous allons mettre en 
 place un **JSON W**eb **T**oken qui permettra d'authentifier l'utilisateur plus facilement.
 
@@ -167,7 +167,7 @@ async login(user: any) {
 ainsi que l'import et l'injection du `JwtService` depuis le module `@nestjs/jwt` dans le constructeur du AuthService.
 
 Ici, on utilise la méthode `sign()` du `jwtService` pour générer un jeton à partir de certaines informations de 
-l'utilisateur.
+l'utilisateur, notamment ici son `id`.
 
 Créez maintenant un nouveau fichier `auth/constants.ts` qui contiendra le code suivant :
 
@@ -264,13 +264,13 @@ Ajoutez simplement sur un contrôleur ou sur une API specifique :
 @UseGuards(AuthGuard('jwt'))
 ```
 
-Et tada ! Passport s'occupe de tout gérer pour vous. Testez une de vos apis protégée avec la ligne de commande suivante : 
+Et tada ! Passport s'occupe de tout gérer pour vous. Par exemple, si vous ajoutez la garde sur l'api `GET /users/`, vous pouvez la tester avec la ligne de commande suivante : 
 
 ```sh
 curl -X GET http://localhost:3000/users -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6MSwiaWF0IjoxNjE3NzM5MzkxLCJleHAiOjE2MTc3Mzk0NTF9.p8uuEpr16YOhoCPjwWNLLQyeKDCxvbixwDa0q60whYI"
 ```
 
-En changeant bien évidemment la valeur du token après `Bearer` (ceci demande à ce que vous ajoutiez la garde sur l'api `GET /users/`)
+Vous aurez évidemment un autre token après `Bearer`.
 
 ## Fonction de Hash pour le mot de passe
 
@@ -301,7 +301,7 @@ bcrypt.compare(password, hash);
 
 On stockera en base le hash du mot de passe et non pas le mot de passe lui-même, dans le cas d'une fuite de votre base de données, vous protégez ainsi vos clients !
 
-Mettez à jour votre code pour gérer le code hashé.
+Mettez à jour votre code pour gérer les mots de passe hashés.
 
 Si vous avez tout bien fait, le comportement n'a pas changé. Cependant, si vous affichez (attention à ne jamais le faire en dehors de ce tp) les mots de passe, vous 
 obtiendrais un charabia (le hash du mot de passe en fait).
@@ -357,4 +357,4 @@ Sans `helmet`, vos réponses fuiteront le fait que votre application a été fai
 X-Powered-By: Express
 ```
 
-Qu'est-ce qu'on peut faire avec ça ? C'est une bonne question et c'est en dehors de la portée du projet. Cependant, ce [blog](https://www.codementor.io/@dealwap/few-ways-i-could-hijack-your-node-js-applications-h07fvj731) explique comment exploiter cette connaissance pour s'approprier des droits (par exemple d'adminstration dans votre application) ou modifier des ressources qui ne sont pas accessibles normalement (Je rappelle ici, que ce blog est à but éducatif, et vous ne devez en aucun cas reproduire ou tenter ces attaques sur de véritables applications, sous peine de sanction pénale. L'UR1 décline toute réponsabilité).
+Qu'est-ce qu'on peut faire avec ça ? C'est une bonne question et c'est en dehors de la portée du projet. Cependant, ce [blog](https://www.codementor.io/@dealwap/few-ways-i-could-hijack-your-node-js-applications-h07fvj731) explique comment exploiter cette connaissance pour s'approprier des droits (par exemple d'adminstration dans votre application) ou modifier des ressources qui ne sont pas accessibles normalement (Je rappelle ici, que ce blog est à but éducatif, et vous ne devez en aucun cas reproduire ou tenter ces attaques sur de véritables applications, sous peine de sanction pénale. L'UR1 décline toute responsabilité).
