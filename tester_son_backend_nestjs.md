@@ -14,7 +14,7 @@ npm i --save-dev @nestjs/testing
 Nous utiliserons le framework de test [jest](https://github.com/facebook/jest) qui est celui utilisé par défaut dans 
 NestJS.
 
-## Premier test du contrôleur des `association-forms`
+## Premier test du contrôleur des `users`
 
 Si vous avez suivi les parties précédentes, NestJS génère automatiquement le fichier de tests lorsque vous utilisez la
 commande `nest g co users`, et celui-ci s'appellera `users.controller.spec.ts` :
@@ -42,14 +42,14 @@ describe('UsersController', () => {
 
 Le test d'un backend est un peu fastidieux et délicat à cause des différentes injections qui sont faites, sur de 
 multiples-couches (contrôleurs, services, repositories). Nous allons tester cette partie du backend car elle est la plus
-"simple", d'un point de vue des injections des differents services/repository.
+"simple", d'un point de vue des injections des differents services/repositories.
 
 Tout d'abord, notre contrôleur a besoin d'un service. Une bonne pratique de test est de faire unitairement, c'est-à-dire,
 séparer les tests des différents composants (ou faire de gros tests d'intégration, mais ici on s'attardera sur les tests 
-unitaires). De fait, il ne faut pas reposer les tests du contrôleurs sur l'implémentation des services car si un bug 
-réside dans les services, les tests du controleurs risquent d'échouer et le temps de débuggage s'allonger.
+unitaires). De fait, il ne faut pas reposer les tests du contrôleur sur l'implémentation des services car si un bug 
+réside dans les services, les tests du contrôleur risquent d'échouer et le temps de débuggage s'allonger.
 
-Pour cela, nous allons "*mocker*", c'est-à-dire utiliser de fausse et artificielle implémentation pour remplir le rôle 
+Pour cela, nous allons "*mocker*", c'est-à-dire utiliser de fausses et artificielles implémentations pour remplir le rôle 
 des services et des repositories.
 
 Lancez la commande suivante : `npm run test users.controller` vous devriez observer une erreur, comme : 
@@ -141,9 +141,9 @@ test.
 Les méthodes `expect()` et `toBeXXX()` (il faut remplacer les `XXX` par quelque chose, comme ici `Defined`) permettent de faire l'assertion, c'est-à-dire : `expect(controller).toBeDefined()` 
 veut dire "on s'attend que la variable `controller` soit définie."
 
-Voici l'implémentation du test de l'API `getAll` du contrôleur :
+Voici l'implémentation du test de l'API `getAll()` du contrôleur :
 
-```typescript=
+```typescript
   describe('getAll', () => {
     it('should return an array of users', async () => {
       const expected = Promise.all([{ 
@@ -173,15 +173,14 @@ enchaîner les fonctions `it()` comme bon vous semble.
 
 ## Tester avec des paramètres
 
-Nous allons maintenant nous attarder sur le test de l'endpoint `get`, implémenté par une méthode nommée `get()`.
-Contrairement à `getAll()`, celle-ci prend en entrée un paramètre, un entier désignant l'id du procès verbal.
+Nous allons maintenant nous attarder sur le test de l'endpoint `get`, implémenté par une méthode nommée `getById()`.
+Contrairement à `getAll()`, celle-ci prend en entrée un paramètre, un entier désignant l'id du user.
 
 Pour cela, rien de plus simple, il nous faut simplement mocker la méthode `get(id)` du service sous-jacent et 
 préciser le paramètre lors de l'appel dans le `expect()` :
 
 ```typescript
  describe('getById', () => {
-    describe('getById', () => {
     it('should return a single user, with the provided id', async () => {
       const expected = await Promise.all([{ 
         /* TODO */
@@ -191,7 +190,6 @@ préciser le paramètre lors de l'appel dans le `expect()` :
       });
       expect(await controller.getById({id: 0})).toBe(/* TODO */);
     })
-  });
   });
 ```
 
