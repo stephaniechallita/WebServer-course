@@ -61,7 +61,7 @@ sous la forme d’un projet **privé** sur le [GitLab de l’ISTIC](https://gitl
 aurez mis votre code source ainsi qu’un rapport détaillant vos choix de mapping ORM et d'API. Un fichier README 
 à la racine du projet GitLab devra en décrire le contenu et l’organisation.
 Vous devrez inviter vos évaluateurs au projet GitLab et leur envoyer l’adresse du projet par mail au plus tard
-le 09/01/23 à minuit (CET) (soutenance le **10 janvier** ), lors de votre dernière séance de travaux pratiques.
+le 09/01/23 à minuit (CET) (soutenance le **10 janvier**), lors de votre dernière séance de travaux pratiques.
 
 Voici les critères d'évaluation utilisés :
 
