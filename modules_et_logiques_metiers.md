@@ -204,7 +204,7 @@ Le nouvel endpoint dans `associations.controller.ts` est :
 
 ```typescript
 @Get(':id/members')
-getMembers(@Param() parameter): Users[] {
+getMembers(@Param() parameter): User[] {
     // TODO
 }
 ```
