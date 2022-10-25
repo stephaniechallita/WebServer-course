@@ -216,7 +216,7 @@ méthode `save()`.
   recherches. Par exemple, le `FindOperator` le plus demandé serait celui qui permet de trouver une entité avec un 
   certain id. Celui-ci s'écrit comme qui suit :
 ```typescript=
-this.repository.findOne({id: Equal(idToFind)});
+this.repository.findOne({where: {id: Equal(idToFind)}});
 ```
 
 Le `FindOperator` a une forme de JSON, où la clé est la colonne sur laquelle on cherche à mettre la condition, et la 
