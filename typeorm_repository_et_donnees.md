@@ -244,7 +244,7 @@ Pour le lazy loading, `association.entity.ts`:
 Pour tout charger à chaque requête, `association.entity.ts`:
 ```typescript
 /* ... */
-  @ManytoMany(type => User, { eager: true })
+  @ManyToMany(type => User, { eager: true })
   @JoinTable()
   users: User[]
 /* ... */
