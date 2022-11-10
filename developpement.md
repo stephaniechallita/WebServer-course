@@ -100,7 +100,7 @@ retourne le role de l'utilisateur avec l'`id = 1` au sein de l'association avec 
 Les procès verbaux sont des documents texte qui contiennent le compte rendus des assemblés générales des associations.
 Les associations doivent tenir une assemblée générale lors de leur création et une fois par an au moins.
 
-Lors des assemblées générales, les membres des associations peuvent votés pour des résolutions ou des mentions, et sont donc inscrits 
+Lors des assemblées générales, les membres des associations peuvent voter pour des résolutions ou des mentions, et sont donc inscrits 
 en tant que "votant" (voters) sur le procès verbal correspondant.
 
 La relation entre les trois entités `Minutes`, `User` et `Association` est décrite par le diagramme de classes ci-dessous:
