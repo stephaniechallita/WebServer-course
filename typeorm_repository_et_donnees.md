@@ -211,7 +211,7 @@ méthode `save()`.
   ci-dessous) passé en paramètre.
 - `repository.findOne(FindOperator)` : retourne une entité de la base de données qui correspond au `FindOperator`(voir 
   ci-dessous) passé en paramètre.
-- `repository.delete(entity)` : supprime de la base de données l'entité passée en paramètre.
+- `repository.delete(id)` : supprime de la base de données l'entité qui a l'id passé en paramètre.
 - `FindOperator` : on peut voir les `FindOperator` comme des prédicats sur les entités. Ils servent à paramétrer les 
   recherches. Par exemple, le `FindOperator` le plus demandé serait celui qui permet de trouver une entité avec un 
   certain id. Celui-ci s'écrit comme qui suit :
