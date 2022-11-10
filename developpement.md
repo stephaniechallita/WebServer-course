@@ -105,7 +105,7 @@ en tant que "votant" (voters) sur le procès verbal correspondant.
 
 La relation entre les trois entités `Minutes`, `User` et `Association` est décrite par le diagramme de classes ci-dessous:
 
-![](pictures/verbal_process_classes.png)
+![](pictures/minutes_classes.png)
 
 De la même manière, voici la classe de données d'entrées pour la création des `Minutes` :
 

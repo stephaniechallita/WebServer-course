@@ -11,16 +11,12 @@ class User {
 class Association {
     name: string
 }
-class VerbalProcess {
+class Minute {
     date: string
     content: string
 }
-class AssociationForm {
-    financialValidation: boolean
-    legalValidation: boolean
-}
-VerbalProcess "*" -- "1" Association
-VerbalProcess "voters" --o User
+Minute "*" -- "1" Association
+Minute "*" o-- "*" User: voters
 User "*" -- "*" Association
 (User, Association) .. Role
 @enduml

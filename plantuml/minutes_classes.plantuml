@@ -8,10 +8,11 @@ class User {
 class Association {
     name: string
 }
-class VerbalProcess {
+class Minute {
     date: string
     content: string
 }
-VerbalProcess "*" -- "1" Association
-VerbalProcess "voters" --o User
+Minute "*" -- "1" Association
+Minute "*" o-- "*" User: voters
+User "*" -- "*" Association
 @enduml
