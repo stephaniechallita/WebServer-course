@@ -209,8 +209,7 @@ méthode `save()`.
   la création et la mise à jour.
 - `repository.find(FindOperator)` : retourne toutes les entités du repository qui correspondent au `FindOperator`(voir 
   ci-dessous) passé en paramètre.
-- `repository.findOne(FindOperator)` : retourne une entité de la base de données qui correspond au `FindOperator`(voir 
-  ci-dessous) passé en paramètre.
+- `repository.findOneBy(FindOperator)` : retourne une entité de la base de données qui correspond au `FindOperator`(voir ci-dessous) passé en paramètre.
 - `repository.delete(id)` : supprime de la base de données l'entité qui a l'id passé en paramètre.
 - `FindOperator` : on peut voir les `FindOperator` comme des prédicats sur les entités. Ils servent à paramétrer les 
   recherches. Par exemple, le `FindOperator` le plus demandé serait celui qui permet de trouver une entité avec un 
