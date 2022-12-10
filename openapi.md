@@ -116,7 +116,7 @@ import { ApiProperty } from "@nestjs/swagger";
 export class UserInput {
 
     @ApiProperty({
-        description: 'The firtname of the user',
+        description: 'The firstname of the user',
         example: "John",
         type: String,
     })
