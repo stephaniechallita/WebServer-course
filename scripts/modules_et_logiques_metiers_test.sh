@@ -55,3 +55,4 @@ put http://localhost:3000/associations/1 200 "idUsers[]=1&idUsers[]=2&name=Assoc
 delete http://localhost:3000/associations/1 200
 get http://localhost:3000/associations/1 404
 get http://localhost:3000/associations/0/members 200
+delete http://localhost:3000/users/1 200
