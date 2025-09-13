@@ -235,7 +235,7 @@ Par exemple, pour le `@ManyToMany` entre Association et User, on aura :
 Pour le lazy loading, `association.entity.ts`:
 ```typescript
 /* ... */
-  @ManytoMany(type => User)
+  @ManytoMany(() => User)
   @JoinTable()
   users: Promise<User[]>
 /* ... */
@@ -243,7 +243,7 @@ Pour le lazy loading, `association.entity.ts`:
 Pour tout charger à chaque requête, `association.entity.ts`:
 ```typescript
 /* ... */
-  @ManyToMany(type => User, { eager: true })
+  @ManyToMany(() => User, { eager: true })
   @JoinTable()
   users: User[]
 /* ... */
