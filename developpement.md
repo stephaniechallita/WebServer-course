@@ -222,7 +222,7 @@ Ce [post StackOverFlow](https://stackoverflow.com/questions/11508463/javascript-
 
 Nous fournissons deux scripts :
 
-1. [dev_init_db_specific_apis](./scripts/dev_init_db_specific_apis copy.sh) qui va initialiser la base de données avec des requêtes POST
+1. [dev_init_db_specific_apis](./scripts/dev_init_db_specific_apis.sh) qui va initialiser la base de données avec des requêtes POST
 2. [dev_specific_apis](./scripts/dev_specific_apis.sh) qui va réaliser une serie de requêtes GET sur les apis definies juste au-dessus.
 
 L'idée étant, comme il s'agit de tester uniquement les implémentations de certains requêtes GET qui NE modifient PAS la base de données, *

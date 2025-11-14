@@ -357,4 +357,7 @@ Sans `helmet`, vos réponses fuiteront le fait que votre application a été fai
 X-Powered-By: Express
 ```
 
-Qu'est-ce qu'on peut faire avec ça ? C'est une bonne question et c'est en dehors de la portée du projet. Cependant, ce [blog](https://www.codementor.io/@dealwap/few-ways-i-could-hijack-your-node-js-applications-h07fvj731) explique comment exploiter cette connaissance pour s'approprier des droits (par exemple d'adminstration dans votre application) ou modifier des ressources qui ne sont pas accessibles normalement (Je rappelle ici, que ce blog est à but éducatif, et vous ne devez en aucun cas reproduire ou tenter ces attaques sur de véritables applications, sous peine de sanction pénale. L'UR1 décline toute responsabilité).
+Pour plus d'information:
+
+- [Using Helmet in Node.js to secure your application](https://blog.logrocket.com/using-helmet-node-js-secure-application)
+- [A Comprehensive Guide to X-Powered-By Header](https://calcomsoftware.com/a-comprehensive-guide-to-x-powered-by-header/)
