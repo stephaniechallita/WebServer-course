@@ -57,7 +57,7 @@ complétez l'étape 8, je vous tire mon chapeau.
 ## Modalités d'évaluation
 
 Le projet est la seule évaluation du module. Le projet sera réalisé en binôme. Vous devrez rendre votre projet 
-sous la forme d’un projet **privé** sur le [GitLab de l’ISTIC](https://gitlab.istic.univ-rennes1.fr) sur lequel vous 
+sous la forme d’un projet **privé** sur le [GitLab de l’ISTIC](https://gitlab2.istic.univ-rennes1.fr) sur lequel vous 
 aurez mis votre code source ainsi qu’un rapport détaillant vos choix de mapping ORM et d'API. Un fichier README 
 à la racine du projet GitLab devra en décrire le contenu et l’organisation.
 Vous devrez inviter vos évaluateurs au projet GitLab et leur envoyer l’adresse du projet par mail au plus tard
