@@ -46,7 +46,7 @@ Ceci créera une base de données dans le fichier `mydatabase.db`.
 Pour installer TypeORM, tapez la commande suivante à la racine de votre projet :
 
 ```shell
-npm install --save @nestjs/typeorm typeorm sqlite3
+npm install --save @nestjs/typeorm typeorm better-sqlite3
 ```
 
 Puis importez dans votre `app.module.ts` le module `TypeORMModule` de la façon suivante :
@@ -55,7 +55,7 @@ Puis importez dans votre `app.module.ts` le module `TypeORMModule` de la façon 
 @Module({
   imports: [
 +    TypeOrmModule.forRoot({
-+      type: 'sqlite',
++      type: 'better-sqlite3',
 +      database: 'mydatabase.db',
 +      entities: [],
 +      synchronize: true,
